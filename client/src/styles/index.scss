@@ -1,8 +1,6 @@
-
-
 // --------------------
 // Definition of variables
-$primary: #1ebbff;
+$primary: peachpuff;
 $marginBottomNavbar: 20px;
 $navbarHeight: 60px;
 
@@ -10,9 +8,8 @@ $navbarHeight: 60px;
 // To install Boostrap:
 // 1) Run in the client folder: $ npm i bootstrap
 // 2) Import bootstrap with the following line
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
 // ----------------------------------------
-
 
 // --------------------
 // Style reusable for all components
@@ -64,7 +61,7 @@ body {
 }
 
 .MainNavbar {
-  height: $navbarHeight;
+  min-height: $navbarHeight;
   margin-bottom: $marginBottomNavbar;
   .logo {
     height: 40px;
@@ -83,12 +80,12 @@ body {
   }
 }
 
-.Homes {
+.Spots {
   margin-top: -$marginBottomNavbar;
 
   .row {
     height: calc(100vh - #{$navbarHeight});
-    
+
     .col-text {
       padding: 20px;
       overflow-y: scroll;
