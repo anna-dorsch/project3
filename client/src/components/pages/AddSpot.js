@@ -13,6 +13,12 @@ import api from "../../api";
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const geocodingClient = mbxGeocoding({
+  accessToken:
+    "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
+});
+
 class AddSpot extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +28,8 @@ class AddSpot extends Component {
       rating: 0,
       lng: 13.3711224,
       lat: 52.5063688,
-      message: null
+      message: null,
+      searchResults: []
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -87,7 +94,7 @@ class AddSpot extends Component {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     // Create a marker on the map
-    this.marker = new mapboxgl.Marker({ color: "red", draggable: true })
+    this.marker = new mapboxgl.Marker({ color: "blue", draggable: true })
       .setLngLat([this.state.lng, this.state.lat])
       .addTo(this.map);
 
@@ -101,6 +108,32 @@ class AddSpot extends Component {
       });
     });
   }
+
+  //trying to configure the searchbar
+  handleSearchChange = e => {
+    let value = e.target.value;
+    geocodingClient
+      .forwardGeocode({
+        query: value,
+        limit: 5
+      })
+      .send()
+      .then(response => {
+        console.log(response.body.features);
+        this.setState({
+          searchResults: response.body.features
+        });
+      });
+  };
+  handleSearchResultClick({ center }) {
+    this.setState({
+      lng: center[0],
+      lat: center[1]
+    });
+    this.map.setCenter(center);
+    this.marker.setLngLat(center);
+  }
+
   render() {
     return (
       <Container className="AddSpot">
@@ -177,6 +210,29 @@ class AddSpot extends Component {
                   </Row>
                 </Col>
               </FormGroup>
+
+              {/* new code */}
+              <FormGroup row>
+                <Label for="title" xl={3}>
+                  Place
+                </Label>
+                <Col xl={9}>
+                  <Input
+                    type="text"
+                    value={this.state.search}
+                    name="search"
+                    onChange={this.handleSearchChange}
+                  />
+
+                  {this.state.searchResults.map(result => (
+                    <div onClick={() => this.handleSearchResultClick(result)}>
+                      {result.place_name}
+                      <hr />
+                    </div>
+                  ))}
+                </Col>
+              </FormGroup>
+              {/* /new code */}
 
               <FormGroup row>
                 <Col xl={{ size: 9, offset: 3 }}>
