@@ -5,6 +5,11 @@ import SpotDetail from "./SpotDetail";
 import api from "../../api";
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const geocodingClient = mbxGeocoding({
+  accessToken:
+    "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
+});
 
 class Spots extends Component {
   constructor(props) {
