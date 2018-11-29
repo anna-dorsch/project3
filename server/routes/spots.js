@@ -3,15 +3,15 @@ const Spot = require("../models/Spot");
 const { isLoggedIn } = require("../middlewares");
 
 const router = express.Router();
-import api from "../../api";
+// import api from "../../api";
 
-import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+// import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const geocodingClient = mbxGeocoding({
-  accessToken:
-    "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
-});
+// const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+// const geocodingClient = mbxGeocoding({
+//   accessToken:
+//     "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
+// });
 
 router.get("/", (req, res, next) => {
   Spot.find()

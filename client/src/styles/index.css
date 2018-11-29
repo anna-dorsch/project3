@@ -6374,3 +6374,9 @@ body {
 .Secret .result {
   font-size: 1.2em;
   color: #177e89; }
+
+.list-group {
+  max-height: 500px;
+  margin-bottom: 10px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch; }

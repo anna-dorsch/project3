@@ -17,6 +17,8 @@ export default class SpotDetail extends Component {
         {curSpot.description}
         <h4>Rating</h4>
         {curSpot.rating}
+        <h4>Address</h4>
+        {curSpot.address}
         <h4>Owner</h4>
         {curSpot._owner.username}
       </div>

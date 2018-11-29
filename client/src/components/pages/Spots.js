@@ -15,7 +15,9 @@ class Spots extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      spots: []
+      spots: [],
+      lng: 13.3711224,
+      lat: 52.5063688
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -26,7 +28,7 @@ class Spots extends Component {
     this.map = new mapboxgl.Map({
       container: this.mapRef.current,
       style: "mapbox://styles/mapbox/streets-v10",
-      center: [0, 0], // Africa lng,lat
+      center: [this.state.lng, this.state.lat], // Africa lng,lat
       zoom: 5
     });
 
@@ -41,35 +43,40 @@ class Spots extends Component {
     // if (!this.state.spots.spots.title) {
     //   name = this.state.spots.address;
     // }
-    console.log("name", name);
-
+    // console.log("name", name);
+    // console.log("spots", this.state.spots);
     return (
       <div className="spots">
         <Row>
           <Col sm={3} className="col-text">
-            <ListGroup>
-              {this.state.spots.map((h, i) => (
-                <ListGroupItem
-                  key={h._id}
-                  action
-                  tag={NavLink}
-                  to={"/spots/" + h._id}
-                  onClick={() => this.handleSpotSelection(i)}
-                >
-                  <p>
-                    {h.title}
-                    {/* by {h._owner.username} */}
-                  </p>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
+            <div class="panel panel-primary" id="result_panel">
+              <div class="panel-heading">
+                <h3 class="panel-title">The Best Spots</h3>
+              </div>
+              <ListGroup>
+                {this.state.spots.map((h, i) => (
+                  <ListGroupItem
+                    key={h._id}
+                    action
+                    tag={NavLink}
+                    to={"/spots/" + h._id}
+                    onClick={() => this.handleSpotSelection(i)}
+                  >
+                    <p>
+                      {h.title}
+                      {/* by {h._owner.username} */}
+                    </p>
+                  </ListGroupItem>
+                ))}
+              </ListGroup>
+            </div>
           </Col>
           <Col sm={3} className="col-text">
             <Switch>
               <Route
                 path="/spots/:id"
                 render={props => (
-                  <SpotDetail {...props} spots={this.state.spots} />
+                  <SpotDetail spots={this.state.spots} {...props} />
                 )}
               />
               <Route render={() => <h2>Select a spot</h2>} />
@@ -92,7 +99,7 @@ class Spots extends Component {
             const [lng, lat] = spot.location.coordinates;
             return {
               ...spot,
-              marker: new mapboxgl.Marker({ color: "red" })
+              marker: new mapboxgl.Marker({ color: "blue" })
                 .setLngLat([lng, lat])
                 .on("click", () => {
                   console.log("clicked");
