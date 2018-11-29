@@ -52,13 +52,14 @@ class AddSpot extends Component {
 
   handleClick(e) {
     e.preventDefault();
-    console.log(this.state.title, this.state.description);
+
     let data = {
       title: this.state.title,
       description: this.state.description,
       rating: this.state.rating,
       lng: this.state.lng,
       lat: this.state.lat
+      /* adress: this.state.adress */
     };
     api
       .addSpot(data)
@@ -125,10 +126,13 @@ class AddSpot extends Component {
         });
       });
   };
-  handleSearchResultClick({ center }) {
+  handleSearchResultClick({ center, place_name }) {
+    console.log("hello", place_name);
     this.setState({
       lng: center[0],
-      lat: center[1]
+      lat: center[1],
+      adress: place_name,
+      searchResults: []
     });
     this.map.setCenter(center);
     this.marker.setLngLat(center);
@@ -219,13 +223,13 @@ class AddSpot extends Component {
                 <Col xl={9}>
                   <Input
                     type="text"
-                    value={this.state.search}
+                    value={this.state.adress}
                     name="search"
                     onChange={this.handleSearchChange}
                   />
 
                   {this.state.searchResults.map(result => (
-                    <div onClick={() => this.handleSearchResultClick(result)}>
+                    <div onClick={e => this.handleSearchResultClick(result)}>
                       {result.place_name}
                       <hr />
                     </div>
