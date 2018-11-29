@@ -68,6 +68,13 @@ export default {
       .catch(errHandler);
   },
 
+  getProfile(){
+    return service
+    .get("/profile")
+    .then(res => res.data)
+    .catch(errHandler)
+  },
+
   getSecret() {
     return service
       .get("/secret")

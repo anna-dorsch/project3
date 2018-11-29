@@ -10,5 +10,8 @@
   },
   "engines": {
     "node": "8.9.4"
+  },
+  "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.4.1"
   }
 }
