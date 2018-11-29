@@ -64,7 +64,7 @@ class Spots extends Component {
               ))}
             </ListGroup>
           </Col>
-          <Col sm={4} className="col-text">
+          <Col sm={3} className="col-text">
             <Switch>
               <Route
                 path="/spots/:id"
