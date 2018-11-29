@@ -3,15 +3,12 @@ const Schema = mongoose.Schema;
 
 const spotSchema = new Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String },
     pictures: [String],
     description: { type: String, required: true },
     rating: { type: Number, required: true },
-    // address: {
-    //   street: String,
-    //   city: String,
-    //   country: String,
-    // },
+    address: String,
+    // search: { type: String, required: true },
     location: {
       type: { type: String, required: true },
       coordinates: { type: [Number], required: true }

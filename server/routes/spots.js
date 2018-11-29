@@ -3,6 +3,15 @@ const Spot = require("../models/Spot");
 const { isLoggedIn } = require("../middlewares");
 
 const router = express.Router();
+import api from "../../api";
+
+import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const geocodingClient = mbxGeocoding({
+  accessToken:
+    "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
+});
 
 router.get("/", (req, res, next) => {
   Spot.find()
@@ -14,15 +23,16 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", isLoggedIn, (req, res, next) => {
-  let { title, description, rating, lng, lat } = req.body;
+  let { title, description, rating, lng, lat, address } = req.body;
   let _owner = req.user._id;
-  if (!title || !description || !rating || !lng || !lat) {
-    next(new Error("You have to send: title, description, rating, lng, lat"));
+  if (!description || !rating || !lng || !lat) {
+    next(new Error("You have to send: name, description, rating, lng, lat"));
   }
   Spot.create({
     title,
     description,
     rating,
+    address,
     location: {
       type: "Point",
       coordinates: [lng, lat]
@@ -37,5 +47,7 @@ router.post("/", isLoggedIn, (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+// trying something
 
 module.exports = router;

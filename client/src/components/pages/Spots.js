@@ -37,6 +37,12 @@ class Spots extends Component {
     this.map.setCenter(this.state.spots[iSelected].location.coordinates);
   }
   render() {
+    let name = this.state.spots.title;
+    // if (!this.state.spots.spots.title) {
+    //   name = this.state.spots.address;
+    // }
+    console.log("name", name);
+
     return (
       <div className="spots">
         <Row>
@@ -50,7 +56,10 @@ class Spots extends Component {
                   to={"/spots/" + h._id}
                   onClick={() => this.handleSpotSelection(i)}
                 >
-                  {h.title} by {h._owner.username}
+                  <p>
+                    {h.title}
+                    {/* by {h._owner.username} */}
+                  </p>
                 </ListGroupItem>
               ))}
             </ListGroup>
@@ -77,7 +86,7 @@ class Spots extends Component {
     api
       .getSpots()
       .then(spots => {
-        console.log(spots);
+        // console.log(spots);
         this.setState({
           spots: spots.map(spot => {
             const [lng, lat] = spot.location.coordinates;

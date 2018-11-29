@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import {
   Button,
   Col,
@@ -29,7 +30,8 @@ class AddSpot extends Component {
       lng: 13.3711224,
       lat: 52.5063688,
       message: null,
-      searchResults: []
+      searchResults: [],
+      address: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -58,7 +60,8 @@ class AddSpot extends Component {
       description: this.state.description,
       rating: this.state.rating,
       lng: this.state.lng,
-      lat: this.state.lat
+      lat: this.state.lat,
+      address: this.state.searchText
       /* adress: this.state.adress */
     };
     api
@@ -102,17 +105,36 @@ class AddSpot extends Component {
     // Trigger a function every time the marker is dragged
     this.marker.on("drag", () => {
       let { lng, lat } = this.marker.getLngLat();
-      console.log("DEBUG lng, lat", lng, lat);
-      this.setState({
-        lng,
-        lat
-      });
+      // let { searchText } =
+      // console.log("DEBUG lng, lat", lng, lat);
+      console.log(this.marker.getLngLat());
+
+      // let address;
+
+      axios
+        .get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA`
+        )
+        .then(res => {
+          // document.getElementById("address").value = res.data.features[0].place_name
+          // address = res.data.features[0].place_name;
+
+          this.setState({
+            address: res.data.features[0].place_name,
+            lng,
+            lat
+          });
+        });
     });
   }
 
   //trying to configure the searchbar
   handleSearchChange = e => {
     let value = e.target.value;
+    this.setState({
+      searchText: value
+    });
+    // This is for autocompletion
     geocodingClient
       .forwardGeocode({
         query: value,
@@ -126,13 +148,18 @@ class AddSpot extends Component {
         });
       });
   };
-  handleSearchResultClick({ center, place_name }) {
-    console.log("hello", place_name);
+
+  handleSearchResultClick({ center, place_name, context, ...props }) {
+    // console.log("hello", props);
+    // console.log("place_name", place_name);
+    // console.log("context", context[3].text);
     this.setState({
       lng: center[0],
       lat: center[1],
-      adress: place_name,
+      searchText: place_name,
       searchResults: []
+
+      // context: context[3].text
     });
     this.map.setCenter(center);
     this.marker.setLngLat(center);
@@ -217,14 +244,14 @@ class AddSpot extends Component {
 
               {/* new code */}
               <FormGroup row>
-                <Label for="title" xl={3}>
+                <Label for="search" xl={3}>
                   Place
                 </Label>
                 <Col xl={9}>
                   <Input
                     type="text"
-                    value={this.state.adress}
-                    name="search"
+                    value={this.state.searchText || this.state.address}
+                    name="searchText"
                     onChange={this.handleSearchChange}
                   />
 
