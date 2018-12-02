@@ -121,3 +121,18 @@ body {
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
 }
+
+.tagBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tag {
+  border-radius: 10px;
+  background-color: $primary;
+  margin: 10px 7px 10px 0px;
+  padding: 5px 10px;
+  color: white;
+  font-size: 12px;
+}

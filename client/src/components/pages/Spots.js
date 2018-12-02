@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { NavLink, Route, Switch } from "react-router-dom";
-import { Button, Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
 import SpotDetail from "./SpotDetail";
 import api from "../../api";
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const geocodingClient = mbxGeocoding({
-  accessToken:
-    "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
-});
+// const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+// const geocodingClient = mbxGeocoding({
+//   accessToken:
+//     "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
+// });
 
 class Spots extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Spots extends Component {
       container: this.mapRef.current,
       style: "mapbox://styles/mapbox/streets-v10",
       center: [this.state.lng, this.state.lat], // Africa lng,lat
-      zoom: 5
+      zoom: 1
     });
 
     // Add zoom control on the top right corner
@@ -39,7 +39,7 @@ class Spots extends Component {
     this.map.setCenter(this.state.spots[iSelected].location.coordinates);
   }
   render() {
-    let name = this.state.spots.title;
+    // let name = this.state.spots.title;
     // if (!this.state.spots.spots.title) {
     //   name = this.state.spots.address;
     // }
@@ -48,10 +48,10 @@ class Spots extends Component {
     return (
       <div className="spots">
         <Row>
-          <Col sm={3} className="col-text">
-            <div class="panel panel-primary" id="result_panel">
-              <div class="panel-heading">
-                <h3 class="panel-title">The Best Spots</h3>
+          <Col md={3} className="col-text">
+            <div className="panel panel-primary" id="result_panel">
+              <div className="panel-heading">
+                <h3 className="panel-title">The Best Spots</h3>
               </div>
               <ListGroup>
                 {this.state.spots.map((h, i) => (
@@ -64,6 +64,7 @@ class Spots extends Component {
                   >
                     <p>
                       {h.title}
+                      {/* {h.address} */}
                       {/* by {h._owner.username} */}
                     </p>
                   </ListGroupItem>

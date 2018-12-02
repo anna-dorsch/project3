@@ -23,10 +23,21 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", isLoggedIn, (req, res, next) => {
-  let { title, description, rating, lng, lat, address } = req.body;
+  let {
+    title,
+    description,
+    rating,
+    lng,
+    lat,
+    address,
+    tagName,
+    tags
+  } = req.body;
   let _owner = req.user._id;
   if (!description || !rating || !lng || !lat) {
-    next(new Error("You have to send: name, description, rating, lng, lat"));
+    return next(
+      new Error("You have to send: name, description, rating, lng, lat")
+    );
   }
   Spot.create({
     title,
@@ -37,6 +48,8 @@ router.post("/", isLoggedIn, (req, res, next) => {
       type: "Point",
       coordinates: [lng, lat]
     },
+    tagName,
+    tags,
     _owner
   })
     .then(spot => {
