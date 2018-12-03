@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { Component } from "react";
+import React from "react";
 import { NavLink, Route, Switch } from "react-router-dom";
 import { Button, Col, FormGroup, ListGroupItem, Row, Input,Form,Label, } from "reactstrap";
 import api from "../../api";
@@ -11,6 +11,7 @@ class Profile extends React.Component {
     this.state = {
       username: "",
       password: "",
+      email: "",
       URL: "",
       file: null,
       message: null
@@ -22,6 +23,7 @@ class Profile extends React.Component {
       this.setState({
         username: user.username,
         password: user.password,
+        email: user.email,
         URL: user.imageURL
       });
     });
@@ -52,38 +54,31 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="container">
-        <Row sm={7}>
+        <Row sm={5}>
           <Col sm={5} className="col-text">
             <h2>hi {this.state.username}</h2>
             <Form>
             <Row>
-            {this.state.URL!=="" && <img src={this.state.URL} style={{height: 200}} />}
-            {this.state.message && <div className="info">
+            {this.state.URL!=="" && <img src={this.state.URL} style={{height: 150, width: 150}} />}
+            {this.state.message && <div className="info"> 
             {this.state.message}
             </div>}
             </Row>
             <Row sm={7}>Username:{this.state.username} </Row>
-            <Row sm={7}>Email: {} </Row>
-            <Row sm={7}>Password: {this.state.password} </Row>
+            <Row sm={7}>Email: {this.state.email} </Row>
+            <Row sm={7}> </Row>
             <FormGroup check inline>
-          <Label check>
-            <Input type="checkbox" /> Diver
-          </Label>
-        </FormGroup>
-        <FormGroup check inline>
-          <Label check>
-             <Input type="checkbox" /> Surfer
-          </Label>
+          
         </FormGroup>
             <Row sm={7}>
               <Form onSubmit={e => this.handleSubmit(e)}>
               <Input type="file" onChange={e => this.handleChange(e)} />{" "}
-              <Button type="submit">Upload</Button></Form>
+              <Button size="sm" outline color="info" type="submit">Upload</Button></Form>
 
             </Row>
             <Row sm={7}>
-              <Button onClick={e => this.handleClick(e)}>Edit</Button>
-              <Button onClick={e => this.handleClick(e)}>Delete</Button>
+              <Button size="sm" outline color="info" onClick={e => this.handleClick(e)}>Edit</Button>
+              <Button size="sm" outline color="info" onClick={e => this.handleClick(e)}>Delete</Button>
             </Row>    
                 
             
