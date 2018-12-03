@@ -68,7 +68,7 @@ class AddSpot extends Component {
       lng: this.state.lng,
       lat: this.state.lat,
       address: this.state.searchText,
-      tagName: this.state.tagName,
+      tagName: "hello" + this.props.suggestions,
       tags: this.state.tagName
     };
     api
@@ -84,6 +84,7 @@ class AddSpot extends Component {
           tags: "",
           message: `Your spot has been created`
         });
+        console.log(this.tagName);
         setTimeout(() => {
           this.setState({
             message: null
@@ -174,22 +175,20 @@ class AddSpot extends Component {
   };
 
   handleSearchResultClick({ center, place_name, context, ...props }) {
-    // console.log("hello", props);
-    // console.log("place_name", place_name);
-    // console.log("context", context[3].text);
     this.setState({
       lng: center[0],
       lat: center[1],
       searchText: place_name,
       searchResults: []
-
-      // context: context[3].text
     });
     this.map.setCenter(center);
     this.marker.setLngLat(center);
   }
 
   render() {
+    const suggestions = this.props.suggestions;
+    console.log("SUGGESTED", suggestions);
+
     return (
       <Container className="AddSpot">
         <h2>Add a Dive Spot</h2>
@@ -231,15 +230,9 @@ class AddSpot extends Component {
                   Tags
                 </Label>
                 <Col xl={9}>
-                  {/* <Input
-                    type="text"
-                    value={this.state.tags}
-                    name="tags"
-                    onChange={this.handleTagSearchChange}
-                  /> */}
                   <Autocomplete
                     type="text"
-                    value={this.state.tagName}
+                    value={this.props.userResults}
                     name="tagName"
                     onChange={this.handleSearchChange}
                     suggestions={[
@@ -289,6 +282,21 @@ class AddSpot extends Component {
                   />
                 </Col>
               </FormGroup>
+
+              <FormGroup row>
+                <Label for="photo" xl={3}>
+                  Add a photo
+                </Label>
+                <Col xl={9}>
+                  <Input
+                    type="file"
+                    value={this.state.pictureUrl}
+                    name="spotPhoto"
+                    // onChange={this.handleInputChange}
+                  />
+                </Col>
+              </FormGroup>
+
               <FormGroup row>
                 <Label for="rating" xl={3}>
                   Rating

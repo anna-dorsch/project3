@@ -8,7 +8,6 @@ const spotSchema = new Schema(
     description: { type: String, required: true },
     rating: { type: Number, required: true },
     address: String,
-    tags: String,
     tagName: String,
     location: {
       type: { type: String, required: true },

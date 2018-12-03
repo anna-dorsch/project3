@@ -95,6 +95,9 @@ class Autocomplete extends Component {
   };
 
   render() {
+    // const suggestions = this.props.suggestions;
+    // console.log("SUGGESTED", suggestions);
+
     const {
       onChange,
       onClick,
@@ -113,7 +116,7 @@ class Autocomplete extends Component {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
           <ul className="suggestions">
-            {filteredSuggestions.map((suggestion, index) => {
+            {filteredSuggestions.sort().map((suggestion, index) => {
               let className;
 
               // Flag the active suggestion with a class
@@ -148,16 +151,11 @@ class Autocomplete extends Component {
         />
         {suggestionsListComponent}
         <div className="tagBox">
-          {this.state.userResults.map(
-            e => (
-              console.log(this.state.userResults),
-              (
-                <div className="tag" key={e}>
-                  {e}
-                </div>
-              )
-            )
-          )}
+          {this.state.userResults.sort().map(e => (
+            <div className="tag" key={e}>
+              {e}
+            </div>
+          ))}
         </div>
       </Fragment>
     );

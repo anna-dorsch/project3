@@ -23,16 +23,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", isLoggedIn, (req, res, next) => {
-  let {
-    title,
-    description,
-    rating,
-    lng,
-    lat,
-    address,
-    tagName,
-    tags
-  } = req.body;
+  let { title, description, rating, lng, lat, address, tagName } = req.body;
   let _owner = req.user._id;
   if (!description || !rating || !lng || !lat) {
     return next(
@@ -49,7 +40,6 @@ router.post("/", isLoggedIn, (req, res, next) => {
       coordinates: [lng, lat]
     },
     tagName,
-    tags,
     _owner
   })
     .then(spot => {

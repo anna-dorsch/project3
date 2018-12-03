@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { NavLink, Route, Switch } from "react-router-dom";
-import { Col, ListGroup, ListGroupItem, Row } from "reactstrap";
+import {
+  Col,
+  ListGroup,
+  ListGroupItem,
+  Row,
+  FormGroup,
+  Label,
+  Input
+} from "reactstrap";
 import SpotDetail from "./SpotDetail";
 import api from "../../api";
 
@@ -17,7 +25,9 @@ class Spots extends Component {
     this.state = {
       spots: [],
       lng: 13.3711224,
-      lat: 52.5063688
+      lat: 52.5063688,
+      searchPlace: "",
+      filteredSuggestions: []
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -38,17 +48,57 @@ class Spots extends Component {
   handleSpotSelection(iSelected) {
     this.map.setCenter(this.state.spots[iSelected].location.coordinates);
   }
+
+  //trying to filter the spots
+  placeSearchChange = e => {
+    const value = e.target.value;
+    console.log("trying", value);
+    const array = this.state.spots;
+
+    const filteredSuggestions = array.filter(
+      suggestion =>
+        suggestion
+          .toString()
+          .toLowerCase()
+          .indexOf(value.toLowerCase()) > -1
+    );
+
+    this.setState({
+      searchPlace: value,
+      suggestions: filteredSuggestions
+    });
+    console.log("filter", filteredSuggestions);
+    console.log("search", this.state.searchPlace);
+    console.log("trying again", this.state.suggestions);
+  };
+
   render() {
-    // let name = this.state.spots.title;
-    // if (!this.state.spots.spots.title) {
-    //   name = this.state.spots.address;
-    // }
-    // console.log("name", name);
     // console.log("spots", this.state.spots);
     return (
       <div className="spots">
         <Row>
           <Col md={3} className="col-text">
+            {/* new code */}
+            <FormGroup row>
+              <Label for="searchPlace" xl={3}>
+                Search for Places
+              </Label>
+              <Col xl={9}>
+                <Input
+                  placeholder="find a spot"
+                  type="text"
+                  value={this.state.searchPlace}
+                  name="searchPlace"
+                  onChange={this.placeSearchChange}
+                />
+                {/* {this.state.searchResults.map(result => (
+                <div onClick={e => this.handleSearchResultClick(result)}>
+                  {result.place_name}
+                  <hr />
+                </div> */}
+              </Col>
+            </FormGroup>
+            {/* /new code */}
             <div className="panel panel-primary" id="result_panel">
               <div className="panel-heading">
                 <h3 className="panel-title">The Best Spots</h3>
