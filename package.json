@@ -12,6 +12,10 @@
     "node": "8.9.4"
   },
   "dependencies": {
-    "@mapbox/mapbox-sdk": "^0.4.1"
+    "@mapbox/mapbox-sdk": "^0.4.1",
+    "cloudinary": "^1.13.2",
+    "multer": "^1.4.1",
+    "multer-storage-cloudinary": "^2.2.1",
+    "parse": "^2.1.0"
   }
 }

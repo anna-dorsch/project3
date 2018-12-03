@@ -1,4 +1,5 @@
 require("dotenv").config();
+require('./configs/cloudinary');
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -35,6 +36,8 @@ app.use(
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.raw());
+app.use(bodyParser.text());
 app.use(cookieParser());
 
 // Set the public folder to "~/client/build/"

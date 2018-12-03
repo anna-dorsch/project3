@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import api from '../../api';
+import { Button, Col, Row, FormGroup, ListGroupItem,Label,Input,Form}from "reactstrap";
 
 class Signup extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: "",
-      name: "",
+      email: "",
       password: "",
       message: null
     }
@@ -22,7 +23,7 @@ class Signup extends Component {
     e.preventDefault()
     let data = {
       username: this.state.username,
-      name: this.state.name,
+      email: this.state.email,
       password: this.state.password,
     }
     api.signup(data)
@@ -37,12 +38,29 @@ class Signup extends Component {
     return (
       <div className="Signup">
         <h2>Signup</h2>
-        <form>
-          Username: <input type="text" value={this.state.username} onChange={(e) => this.handleInputChange("username", e)} /> <br />
-          Name: <input type="text" value={this.state.name} onChange={(e) => this.handleInputChange("name", e)} /> <br />
-          Password: <input type="password" value={this.state.password} onChange={(e) => this.handleInputChange("password", e)} /> <br />
-          <button onClick={(e) => this.handleClick(e)}>Signup</button>
-        </form>
+        <Form>
+        <FormGroup row>
+          <Label for="exampleUsername" sm={1}>Username: </Label>
+          <Col sm={4}>
+            <Input type="username" value= {this.state.username} onChange={(e) => this.handleInputChange("username", e)}name="username" id="exampleusername" placeholder="crazyDiver666" />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="examplePassword" sm={1}>Password :</Label>
+          <Col sm={4}>
+            <Input type="password" name="password" id="examplePassword" placeholder="enter Password" />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="examplePassword" sm={1}>Email:</Label>
+          <Col sm={4}>
+            <Input type="password" value={this.state.username} onChange={(e) => this.handleInputChange("username", e)}name="password" id="examplePassword" placeholder="crazyDiver666@coralreef.com" />
+          </Col>
+          
+          <Button onClick={(e) => this.handleClick(e)}>Signup</Button>
+        </FormGroup>
+        </Form>
+                  
         {this.state.message && <div className="info info-danger">
           {this.state.message}
         </div>}

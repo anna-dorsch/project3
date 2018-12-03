@@ -86,7 +86,7 @@ export default {
     const formData = new FormData();
     formData.append("picture", file);
     return service
-      .post("/endpoint/to/add/a/picture", formData, {
+      .post("/picture", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
