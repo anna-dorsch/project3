@@ -54,12 +54,13 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="container">
-        <Row sm={5}>
+        
           <Col sm={5} className="col-text">
-            <h2>hi {this.state.username}</h2>
             <Form>
+            <Row><h2>hi {this.state.username}</h2></Row>
+            
             <Row>
-            {this.state.URL!=="" && <img src={this.state.URL} style={{height: 150, width: 150}} />}
+            {this.state.URL!=="" && <img src={this.state.URL} style={{height: 150}} />}
             {this.state.message && <div className="info"> 
             {this.state.message}
             </div>}
@@ -84,7 +85,7 @@ class Profile extends React.Component {
             
             </Form>
           </Col>
-        </Row>
+        
       </div>
     );
   }
