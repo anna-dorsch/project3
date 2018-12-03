@@ -1,7 +1,12 @@
 // import React from 'react';
 import React from "react";
+<<<<<<< HEAD
 // import { NavLink, Route, Switch } from "react-router-dom";
 import { Button, Col, FormGroup, Row, Input, Form, Label } from "reactstrap";
+=======
+import { NavLink, Route, Switch } from "react-router-dom";
+import { Button, Col, FormGroup, ListGroupItem, Row, Input,Form,Label, } from "reactstrap";
+>>>>>>> 83d2f39d57c66a1929d44b3414193244926aa0d2
 import api from "../../api";
 // import axios from "axios";
 
@@ -11,6 +16,7 @@ class Profile extends React.Component {
     this.state = {
       username: "",
       password: "",
+      email: "",
       URL: "",
       file: null,
       message: null
@@ -22,6 +28,7 @@ class Profile extends React.Component {
       this.setState({
         username: user.username,
         password: user.password,
+        email: user.email,
         URL: user.imageURL
       });
     });
@@ -50,10 +57,11 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="container">
-        <Row sm={7}>
+        <Row sm={5}>
           <Col sm={5} className="col-text">
             <h2>hi {this.state.username}</h2>
             <Form>
+<<<<<<< HEAD
               <Row>
                 {this.state.URL !== "" && (
                   <img src={this.state.URL} style={{ height: 200 }} />
@@ -86,6 +94,32 @@ class Profile extends React.Component {
                 <Button onClick={e => this.handleClick(e)}>Edit</Button>
                 <Button onClick={e => this.handleClick(e)}>Delete</Button>
               </Row>
+=======
+            <Row>
+            {this.state.URL!=="" && <img src={this.state.URL} style={{height: 150, width: 150}} />}
+            {this.state.message && <div className="info"> 
+            {this.state.message}
+            </div>}
+            </Row>
+            <Row sm={7}>Username:{this.state.username} </Row>
+            <Row sm={7}>Email: {this.state.email} </Row>
+            <Row sm={7}> </Row>
+            <FormGroup check inline>
+          
+        </FormGroup>
+            <Row sm={7}>
+              <Form onSubmit={e => this.handleSubmit(e)}>
+              <Input type="file" onChange={e => this.handleChange(e)} />{" "}
+              <Button size="sm" outline color="info" type="submit">Upload</Button></Form>
+
+            </Row>
+            <Row sm={7}>
+              <Button size="sm" outline color="info" onClick={e => this.handleClick(e)}>Edit</Button>
+              <Button size="sm" outline color="info" onClick={e => this.handleClick(e)}>Delete</Button>
+            </Row>    
+                
+            
+>>>>>>> 83d2f39d57c66a1929d44b3414193244926aa0d2
             </Form>
           </Col>
         </Row>
