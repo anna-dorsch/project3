@@ -33,7 +33,7 @@ export default class MainNavbar extends Component {
       <Navbar color="primary" dark expand="md" className="MainNavbar">
         <NavbarBrand to="/" tag={Link}>
           <img src={logo} className="logo" alt="logo" />
-          MERN Airbnb
+          IMMERSE
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>

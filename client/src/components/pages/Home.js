@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import api from '../../api';
+import React, { Component } from "react";
+// import api from '../../api';
 
 class Home extends Component {
   // constructor(props) {
@@ -7,7 +7,7 @@ class Home extends Component {
   //   this.state = {
   //   }
   // }
-  render() {                
+  render() {
     return (
       <div className="Home">
         <h2>Home</h2>

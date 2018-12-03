@@ -13,6 +13,8 @@ import {
 import api from "../../api";
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+import Autocomplete from "./Autocomplete";
+// import { render } from "react-dom";
 
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingClient = mbxGeocoding({
@@ -23,6 +25,7 @@ const geocodingClient = mbxGeocoding({
 class AddSpot extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       title: "",
       description: "",
@@ -31,7 +34,10 @@ class AddSpot extends Component {
       lat: 52.5063688,
       message: null,
       searchResults: [],
-      address: ""
+      address: "",
+      tagName: "",
+      tags: "",
+      pictureUrl: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -61,8 +67,9 @@ class AddSpot extends Component {
       rating: this.state.rating,
       lng: this.state.lng,
       lat: this.state.lat,
-      address: this.state.searchText
-      /* adress: this.state.adress */
+      address: this.state.searchText,
+      tagName: this.state.tagName,
+      tags: this.state.tagName
     };
     api
       .addSpot(data)
@@ -72,6 +79,9 @@ class AddSpot extends Component {
           title: "",
           description: "",
           rating: 0,
+          address: "",
+          tagName: "",
+          tags: "",
           message: `Your spot has been created`
         });
         setTimeout(() => {
@@ -91,7 +101,7 @@ class AddSpot extends Component {
       container: this.mapRef.current,
       style: "mapbox://styles/mapbox/streets-v10",
       center: [this.state.lng, this.state.lat],
-      zoom: 5
+      zoom: 1
     });
 
     // Add zoom control on the top right corner
@@ -131,6 +141,7 @@ class AddSpot extends Component {
   //trying to configure the searchbar
   handleSearchChange = e => {
     let value = e.target.value;
+    console.log(value);
     this.setState({
       searchText: value
     });
@@ -147,6 +158,19 @@ class AddSpot extends Component {
           searchResults: response.body.features
         });
       });
+  };
+
+  handleTagSearchChange = e => {
+    let value = e.target.value;
+    console.log("hello", value);
+    this.setState({
+      tagName: value
+    }).then(response => {
+      console.log(response.value);
+      this.setState({
+        tags: response.value
+      });
+    });
   };
 
   handleSearchResultClick({ center, place_name, context, ...props }) {
@@ -196,8 +220,72 @@ class AddSpot extends Component {
                     value={this.state.description}
                     name="description"
                     cols="30"
-                    rows="10"
+                    rows="7"
                     onChange={this.handleInputChange}
+                  />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="search" xl={3}>
+                  Tags
+                </Label>
+                <Col xl={9}>
+                  {/* <Input
+                    type="text"
+                    value={this.state.tags}
+                    name="tags"
+                    onChange={this.handleTagSearchChange}
+                  /> */}
+                  <Autocomplete
+                    type="text"
+                    value={this.state.tagName}
+                    name="tagName"
+                    onChange={this.handleSearchChange}
+                    suggestions={[
+                      "summer",
+                      "spring",
+                      "fish",
+                      "sharks",
+                      "manta ray",
+                      "turtles",
+                      "reef",
+                      "coral reef",
+                      "sun",
+                      "PADI",
+                      "open water diving",
+                      "scuba diving",
+                      "freediving",
+                      "divemaster",
+                      "whale sharks",
+                      "eels",
+                      "sea horses",
+                      "dolphins",
+                      "whales",
+                      "warm",
+                      "cold",
+                      "plastic",
+                      "ship wreck",
+                      "wreck",
+                      "ships",
+                      "beach",
+                      "sandbeach",
+                      "stonebeach",
+                      "indoor",
+                      "outdoor",
+                      "cave",
+                      "cave diving",
+                      "apnea diving",
+                      "beginner",
+                      "advanced",
+                      "intermediate",
+                      "anemone",
+                      "snorkeling",
+                      "octopus",
+                      "starfish",
+                      "ray",
+                      "lionfish"
+                    ]}
                   />
                 </Col>
               </FormGroup>
@@ -207,11 +295,23 @@ class AddSpot extends Component {
                 </Label>
                 <Col xl={9}>
                   <Input
-                    type="number"
-                    value={this.state.rating}
+                    type="select"
                     name="rating"
+                    id="exampleSelect"
+                    value={this.state.rating}
                     onChange={this.handleInputChange}
-                  />
+                  >
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                  </Input>
                 </Col>
               </FormGroup>
               <FormGroup row>

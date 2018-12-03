@@ -6380,3 +6380,16 @@ body {
   margin-bottom: 10px;
   overflow: scroll;
   -webkit-overflow-scrolling: touch; }
+
+.tagBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
+
+.tag {
+  border-radius: 10px;
+  background-color: #177e89;
+  margin: 10px 7px 10px 0px;
+  padding: 5px 10px;
+  color: white;
+  font-size: 12px; }

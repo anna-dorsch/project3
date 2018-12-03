@@ -8,12 +8,14 @@ const spotSchema = new Schema(
     description: { type: String, required: true },
     rating: { type: Number, required: true },
     address: String,
-    // search: { type: String, required: true },
+    tags: String,
+    tagName: String,
     location: {
       type: { type: String, required: true },
       coordinates: { type: [Number], required: true }
     },
-    _owner: { type: Schema.Types.ObjectId, ref: "User" }
+    _owner: { type: Schema.Types.ObjectId, ref: "User" },
+    pictureUrl: String
   },
   {
     timestamps: {
