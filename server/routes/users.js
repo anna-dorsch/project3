@@ -1,10 +1,11 @@
 const express = require('express');
 const User = require('../models/User');
-const { isLoggedIn } = require('../middlewares')
+const { isLoggedIn } = require('../middlewares');
 const router = express.Router();
-// const parser = require('../configs/cloudinary')
-const bcrypt = require("bcrypt")
-const bcryptSalt = 10
+const bcrypt = require("bcrypt");
+const bcryptSalt = 10;
+const parser = require('../configs/cloudinary.js');
+const cloudinary = require('cloudinary');
 
 router.get('/profile',  (req,res,next) => {
   
@@ -37,16 +38,16 @@ router.put('/profile', isLoggedIn, (req,res,next) => {
   })
 })
 
-// parser.single('picture') => extract from the field 'picture' the file and define req.file (and req.file.url)
-// router.post('/pictures', isLoggedIn, parser.single('picture'), (req, res, next) => {
-//   User.findByIdAndUpdate(req.user._id, { pictureUrl: req.file.url })
-//     .then(() => {
-//       res.json({
-//         success: true,
-//         pictureUrl: req.file.url
-//       })
-//     })
-//     .catch(err => next(err))
-// });
+router.post('/picture', parser.single('picture'), (req, res, next) => {
+  let id = req.user._id;
+  cloudinary.v2.uploader.destroy(req.user.public_id, function(res){console.log(res)})
+  User.findByIdAndUpdate(id, { imageURL: req.file.url })
+    .then(() => {
+      res.json({
+        success: true,
+        pictureUrl: req.file.url
+      })
+    })
+});
 
 module.exports = router;
