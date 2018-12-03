@@ -1,7 +1,7 @@
 // import React from 'react';
 import React from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
-import { Button, Col, FormGroup, ListGroupItem, Row, Input,Form,Label, } from "reactstrap";
+// import { NavLink, Route, Switch } from "react-router-dom";
+import { Button, Col, FormGroup, Row, Input, Form, Label } from "reactstrap";
 import api from "../../api";
 // import axios from "axios";
 
@@ -33,22 +33,20 @@ class Profile extends React.Component {
     e.preventDefault();
     this.setState({
       file: e.target.files[0]
-    })
+    });
   }
   handleSubmit(e) {
     e.preventDefault(),
-    this.setState({
-      URL: "",
-      message: "Image loading."
-    })
-    api.addPicture(this.state.file)
-    .then(data => {
+      this.setState({
+        URL: "",
+        message: "Image loading."
+      });
+    api.addPicture(this.state.file).then(data => {
       this.setState({
         URL: data.pictureUrl,
         message: null
-      })
-    }
-      )
+      });
+    });
   }
 
   render() {

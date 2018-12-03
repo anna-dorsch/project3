@@ -1,6 +1,6 @@
-const cloudinary = require('cloudinary');
-const cloudinaryStorage = require('multer-storage-cloudinary');
-const multer = require('multer');
+const cloudinary = require("cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
+const multer = require("multer");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -10,13 +10,22 @@ cloudinary.config({
 
 var storage = cloudinaryStorage({
   cloudinary: cloudinary,
-  folder: 'project3', // The name of the folder in cloudinary
-  allowedFormats: ['jpg', 'png'],
-  filename: function (req, file, cb) {
+  folder: "project3_profile", // The name of the folder in cloudinary
+  allowedFormats: ["jpg", "png"],
+  filename: function(req, file, cb) {
     cb(null, file.originalname); // The file on cloudinary would have the same name as the original file name
   }
 });
 
-const parser = multer({ storage: storage });
+var storage2 = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: "project3_spotPictures", // The name of the folder in cloudinary
+  allowedFormats: ["jpg", "png"],
+  filename: function(req, file, cb) {
+    cb(null, file.originalname); // The file on cloudinary would have the same name as the original file name
+  }
+});
+
+const parser = multer({ storage: storage, storage2 });
 
 module.exports = parser;

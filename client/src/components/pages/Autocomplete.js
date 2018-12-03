@@ -22,8 +22,8 @@ class Autocomplete extends Component {
       showSuggestions: false,
       // What the user has entered
       userInput: "",
-      userResults: [],
-      tags: []
+      userResults: []
+      // tags: []
     };
   }
 
@@ -45,7 +45,6 @@ class Autocomplete extends Component {
       filteredSuggestions,
       showSuggestions: true,
       userInput: e.currentTarget.value
-      // tags: e.currentTarget.value
     });
   };
 
@@ -58,13 +57,11 @@ class Autocomplete extends Component {
       showSuggestions: false,
       userInput: [e.currentTarget.innerText],
       userResults: [...this.state.userResults, e.currentTarget.innerText]
-      // userInput: ""
     });
   };
 
   // Event fired when the user presses a key down
   onKeyDown = e => {
-    console.log("INPUT", this.state.userInput);
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     // User pressed the enter key, update the input and close the
@@ -140,8 +137,9 @@ class Autocomplete extends Component {
         );
       }
     }
-
+    this.props.getData(this.state.userResults);
     return (
+      // console.log("Results",this.state.userResults)
       <Fragment>
         <input
           type="text"

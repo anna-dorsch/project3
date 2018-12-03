@@ -3,18 +3,21 @@ const Schema = mongoose.Schema;
 
 const spotSchema = new Schema(
   {
+    surfSpot: { type: Boolean, required: true, default: false },
+    diveSpot: { type: Boolean, required: true, default: false },
     title: { type: String },
     pictures: [String],
     description: { type: String, required: true },
     rating: { type: Number, required: true },
     address: String,
-    tagName: String,
+    tag: [],
     location: {
       type: { type: String, required: true },
       coordinates: { type: [Number], required: true }
     },
-    _owner: { type: Schema.Types.ObjectId, ref: "User" },
-    pictureUrl: String
+    _owner: { type: Schema.Types.ObjectId, ref: "User" }
+    // pictureUrl: String,
+    // public_id: String
   },
   {
     timestamps: {
