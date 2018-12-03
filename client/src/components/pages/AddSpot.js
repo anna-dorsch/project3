@@ -21,12 +21,15 @@ const geocodingClient = mbxGeocoding({
   accessToken:
     "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
 });
+let mir;
 
 class AddSpot extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      diveSpot: false,
+      surfSpot: false,
       title: "",
       description: "",
       rating: 0,
@@ -35,9 +38,8 @@ class AddSpot extends Component {
       message: null,
       searchResults: [],
       address: "",
-      tagName: "",
-      tags: "",
-      pictureUrl: ""
+      pictureUrl: "",
+      givenTag: mir
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -46,9 +48,13 @@ class AddSpot extends Component {
 
   handleInputChange = event => {
     let name = event.target.name;
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
     this.setState(
       {
-        [name]: event.target.value
+        [name]: value
       },
       () => {
         if (this.marker && (name === "lat" || name === "lng")) {
@@ -58,30 +64,39 @@ class AddSpot extends Component {
     );
   };
 
+  getData = tag => {
+    console.log("data", tag);
+    mir = tag;
+  };
+  // add the place to the database
   handleClick(e) {
     e.preventDefault();
 
     let data = {
+      tag: mir,
+      diveSpot: this.state.diveSpot,
+      surfSpot: this.state.surfSpot,
       title: this.state.title,
       description: this.state.description,
       rating: this.state.rating,
       lng: this.state.lng,
       lat: this.state.lat,
-      address: this.state.searchText,
-      tagName: "hello" + this.props.suggestions,
-      tags: this.state.tagName
+      address: this.state.searchText
     };
+    console.log("sss", data.tag);
     api
       .addSpot(data)
       .then(result => {
         console.log("SUCCESS!");
         this.setState({
+          // type: "",
           title: "",
           description: "",
           rating: 0,
           address: "",
-          tagName: "",
-          tags: "",
+          tagName: [],
+          // pictureUrl: "",
+
           message: `Your spot has been created`
         });
         console.log(this.tagName);
@@ -159,6 +174,8 @@ class AddSpot extends Component {
           searchResults: response.body.features
         });
       });
+    console.log("surfspot", this.state.surfSpot);
+    console.log("diveSpot", this.state.diveSpot);
   };
 
   handleTagSearchChange = e => {
@@ -186,8 +203,8 @@ class AddSpot extends Component {
   }
 
   render() {
-    const suggestions = this.props.suggestions;
-    console.log("SUGGESTED", suggestions);
+    // const suggestions = this.props.suggestions;
+    // console.log("SUGGESTED", suggestions);
 
     return (
       <Container className="AddSpot">
@@ -196,6 +213,31 @@ class AddSpot extends Component {
         <Row>
           <Col md={6}>
             <Form>
+              {/* checking whether it is a dive or a surfspot */}
+              <FormGroup check inline>
+                <Label check for="type">
+                  <Input
+                    name="surfSpot"
+                    type="checkbox"
+                    value={this.state.surfSpot}
+                    onChange={this.handleInputChange}
+                  />
+                  Surfspot
+                </Label>
+              </FormGroup>
+              <FormGroup check inline>
+                <Label check for="type">
+                  <Input
+                    name="diveSpot"
+                    type="checkbox"
+                    value={this.state.diveSpot}
+                    onChange={this.handleInputChange}
+                  />
+                  Divespot
+                </Label>
+              </FormGroup>
+
+              {/* the user can give the place a personal Name */}
               <FormGroup row>
                 <Label for="title" xl={3}>
                   Name
@@ -209,6 +251,8 @@ class AddSpot extends Component {
                   />
                 </Col>
               </FormGroup>
+
+              {/* the user has to add a description to the place he is about to add */}
               <FormGroup row>
                 <Label for="description" xl={3}>
                   Description
@@ -225,12 +269,14 @@ class AddSpot extends Component {
                 </Col>
               </FormGroup>
 
+              {/* the user can add tags to the description */}
               <FormGroup row>
                 <Label for="search" xl={3}>
                   Tags
                 </Label>
                 <Col xl={9}>
                   <Autocomplete
+                    getData={this.getData}
                     type="text"
                     value={this.props.userResults}
                     name="tagName"
@@ -283,6 +329,7 @@ class AddSpot extends Component {
                 </Col>
               </FormGroup>
 
+              {/* the user can add a picture to the place he is about to create */}
               <FormGroup row>
                 <Label for="photo" xl={3}>
                   Add a photo
@@ -292,11 +339,12 @@ class AddSpot extends Component {
                     type="file"
                     value={this.state.pictureUrl}
                     name="spotPhoto"
-                    // onChange={this.handleInputChange}
+                    onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
 
+              {/* the user has to add a rating to the spot */}
               <FormGroup row>
                 <Label for="rating" xl={3}>
                   Rating
@@ -309,6 +357,7 @@ class AddSpot extends Component {
                     value={this.state.rating}
                     onChange={this.handleInputChange}
                   >
+                    <option>0</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -322,6 +371,8 @@ class AddSpot extends Component {
                   </Input>
                 </Col>
               </FormGroup>
+
+              {/* the user can get the address by typing in the latitude and longitude of the place he is about to enter */}
               <FormGroup row>
                 <Label for="title" xl={3}>
                   Longitude/Latitude
@@ -351,6 +402,7 @@ class AddSpot extends Component {
               </FormGroup>
 
               {/* new code */}
+              {/* the user can search for the address of the place he is about to add */}
               <FormGroup row>
                 <Label for="search" xl={3}>
                   Place
@@ -373,6 +425,7 @@ class AddSpot extends Component {
               </FormGroup>
               {/* /new code */}
 
+              {/* button to create the place and save the data into the database */}
               <FormGroup row>
                 <Col xl={{ size: 9, offset: 3 }}>
                   <Button color="primary" onClick={e => this.handleClick(e)}>
