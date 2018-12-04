@@ -23,7 +23,6 @@ class Autocomplete extends Component {
       // What the user has entered
       userInput: "",
       userResults: []
-      // tags: []
     };
   }
 
@@ -92,9 +91,6 @@ class Autocomplete extends Component {
   };
 
   render() {
-    // const suggestions = this.props.suggestions;
-    // console.log("SUGGESTED", suggestions);
-
     const {
       onChange,
       onClick,

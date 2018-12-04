@@ -34,7 +34,9 @@ class Profile extends React.Component {
     this.setState({
       file: e.target.files[0]
     });
+    // console.log("URL", this.state.URL);
   }
+
   handleSubmit(e) {
     e.preventDefault(),
       this.setState({
@@ -48,7 +50,6 @@ class Profile extends React.Component {
       });
     });
   }
-
   render() {
     return (
       <div className="container">

@@ -39,7 +39,7 @@ class AddSpot extends Component {
       searchResults: [],
       address: "",
       pictureUrl: "",
-      givenTag: mir
+      file: null
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -81,20 +81,31 @@ class AddSpot extends Component {
       rating: this.state.rating,
       lng: this.state.lng,
       lat: this.state.lat,
-      address: this.state.searchText
+      address: this.state.searchText.surfSpot,
+      pictureUrl: this.state.pictureUrl
     };
-    console.log("sss", data.tag);
+    // console.log("sss", data.tag);
     api
       .addSpot(data)
+      // api
+      //   .addPicture(this.state.file)
+      //   .then(url => {
+      //     this.setState({
+      //       pictureUrl: url.pictureUrl,
+      //       message: null
+      //     });
+      //     console.log("this is the url", this.state.pictureUrl);
+      //   })
       .then(result => {
         console.log("SUCCESS!");
         this.setState({
-          // type: "",
           title: "",
           description: "",
           rating: 0,
           address: "",
-          tagName: [],
+          diveSpot: false,
+          surfSpot: false,
+
           // pictureUrl: "",
 
           message: `Your spot has been created`
@@ -131,25 +142,26 @@ class AddSpot extends Component {
     // Trigger a function every time the marker is dragged
     this.marker.on("drag", () => {
       let { lng, lat } = this.marker.getLngLat();
-      // let { searchText } =
-      // console.log("DEBUG lng, lat", lng, lat);
-      console.log(this.marker.getLngLat());
-
-      // let address;
 
       axios
         .get(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA`
         )
         .then(res => {
-          // document.getElementById("address").value = res.data.features[0].place_name
-          // address = res.data.features[0].place_name;
-
-          this.setState({
-            address: res.data.features[0].place_name,
-            lng,
-            lat
-          });
+          // javascript magic right here
+          if (res.data.features[0] === undefined) {
+            this.setState({
+              address: "",
+              lng,
+              lat
+            });
+          } else {
+            this.setState({
+              address: res.data.features[0].place_name,
+              lng,
+              lat
+            });
+          }
         });
     });
   }
@@ -169,22 +181,18 @@ class AddSpot extends Component {
       })
       .send()
       .then(response => {
-        console.log(response.body.features);
         this.setState({
           searchResults: response.body.features
         });
       });
-    console.log("surfspot", this.state.surfSpot);
-    console.log("diveSpot", this.state.diveSpot);
   };
 
   handleTagSearchChange = e => {
     let value = e.target.value;
-    console.log("hello", value);
+
     this.setState({
       tagName: value
     }).then(response => {
-      console.log(response.value);
       this.setState({
         tags: response.value
       });
@@ -202,10 +210,23 @@ class AddSpot extends Component {
     this.marker.setLngLat(center);
   }
 
-  render() {
-    // const suggestions = this.props.suggestions;
-    // console.log("SUGGESTED", suggestions);
+  handleChange(e) {
+    e.preventDefault();
+    // console.log("picture1", e.target.files[0].name)
+    this.setState({
+      // pictureUrl: e.target.files[0].name,
+      file: e.target.files[0]
+    });
+    api.addPicture(this.state.file).then(url => {
+      this.setState({
+        pictureUrl: url.pictureUrl,
+        message: null
+      });
+      console.log("this is the url", this.state.pictureUrl);
+    });
+  }
 
+  render() {
     return (
       <Container className="AddSpot">
         <h2>Add a Dive Spot</h2>
@@ -337,9 +358,9 @@ class AddSpot extends Component {
                 <Col xl={9}>
                   <Input
                     type="file"
-                    value={this.state.pictureUrl}
+                    value={this.state.pictureUrl.name}
                     name="spotPhoto"
-                    onChange={this.handleInputChange}
+                    onChange={e => this.handleChange(e)}
                   />
                 </Col>
               </FormGroup>
