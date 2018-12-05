@@ -6474,6 +6474,5 @@ body {
 #more {
   display: none; }
 
-.mapboxgl-marker mapboxgl-marker-anchor-center {
-  fill: pink;
-  color: pink; }
+.curWeather {
+  margin-top: 20px; }

@@ -39,7 +39,7 @@ export default {
     return service
       .post("/login", {
         username,
-        password,
+        password
       })
       .then(res => {
         // If we have localStorage.getItem('user') saved, the application will consider we are loggedin
@@ -68,11 +68,11 @@ export default {
       .catch(errHandler);
   },
 
-  getProfile(){
+  getProfile() {
     return service
-    .get("/profile")
-    .then(res => res.data)
-    .catch(errHandler)
+      .get("/profile")
+      .then(res => res.data)
+      .catch(errHandler);
   },
 
   getSecret() {

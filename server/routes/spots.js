@@ -3,7 +3,6 @@ const Spot = require("../models/Spot");
 const { isLoggedIn } = require("../middlewares");
 
 const router = express.Router();
-// import api from "../../api";
 
 // import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 
@@ -64,6 +63,9 @@ router.post("/", isLoggedIn, (req, res, next) => {
     })
     .catch(err => next(err));
 });
+
+// THIS IS THE VALUE THAT WILL ALWAYS BE IN THE MIDDLE. DO WHAT YOU WANT WITH THAT INFORMATION
+//if (style=="transform: translate(-50%, -50%) translate(212px, 186px)")
 
 // trying something
 

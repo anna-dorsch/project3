@@ -65,7 +65,6 @@ class AddSpot extends Component {
   };
 
   getData = tag => {
-    console.log("data", tag);
     mir = tag;
   };
   // add the place to the database
@@ -81,10 +80,10 @@ class AddSpot extends Component {
       rating: this.state.rating,
       lng: this.state.lng,
       lat: this.state.lat,
-      address: this.state.searchText.surfSpot,
+      address: this.state.searchText,
       pictureUrl: this.state.pictureUrl
     };
-    // console.log("sss", data.tag);
+
     api
       .addSpot(data)
       // api
@@ -105,12 +104,13 @@ class AddSpot extends Component {
           address: "",
           diveSpot: false,
           surfSpot: false,
-
-          // pictureUrl: "",
+          searchText: "",
+          pictureUrl: "",
 
           message: `Your spot has been created`
         });
-        console.log(this.tagName);
+        // console.log(this.tagName);
+        // console.log("state", this.state.searchText);
         setTimeout(() => {
           this.setState({
             message: null
@@ -169,7 +169,7 @@ class AddSpot extends Component {
   //trying to configure the searchbar
   handleSearchChange = e => {
     let value = e.target.value;
-    console.log(value);
+    console.log("FEATURES", value);
     this.setState({
       searchText: value
     });
@@ -184,6 +184,7 @@ class AddSpot extends Component {
         this.setState({
           searchResults: response.body.features
         });
+        console.log("features"), this.state.searchResults;
       });
   };
 
@@ -211,6 +212,7 @@ class AddSpot extends Component {
   }
 
   handleChange(e) {
+    console.log("url.name", this.state.pictureUrl.name);
     e.preventDefault();
     // console.log("picture1", e.target.files[0].name)
     this.setState({
@@ -344,7 +346,20 @@ class AddSpot extends Component {
                       "octopus",
                       "starfish",
                       "ray",
-                      "lionfish"
+                      "lionfish",
+                      "dank",
+                      "big waves",
+                      "deep water",
+                      "Lofoten",
+                      "wetsuit",
+                      "very sunny",
+                      "air/aerial",
+                      "backwash",
+                      "current",
+                      "strong current",
+                      "cliff diving",
+                      "diving knife is a must",
+                      "pearl diving"
                     ]}
                   />
                 </Col>
