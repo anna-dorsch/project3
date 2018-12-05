@@ -93,5 +93,18 @@ export default {
       })
       .then(res => res.data)
       .catch(errHandler);
+  },
+
+  addSpotPicture(spotPicture) {
+    const formDataSpot = new FormData();
+    formDataSpot.append("spots", spotPicture);
+    return service
+      .post("/spots", formDataSpot, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      .then(res => res.data)
+      .catch(errHandler);
   }
 };

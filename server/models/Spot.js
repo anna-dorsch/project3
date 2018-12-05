@@ -16,9 +16,9 @@ const spotSchema = new Schema(
       type: { type: String, required: true },
       coordinates: { type: [Number], required: true }
     },
-    _owner: { type: Schema.Types.ObjectId, ref: "User" }
+    _owner: { type: Schema.Types.ObjectId, ref: "User" },
     // pictureUrl: String,
-    // public_id: String
+    public_id: String
   },
   {
     timestamps: {
