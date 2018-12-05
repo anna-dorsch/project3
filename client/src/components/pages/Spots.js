@@ -69,7 +69,7 @@ class Spots extends Component {
 
   getWeather(a, b) {
     var api_key = "9daf49e00d734c44819461be295f9144";
-    let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${a}&lon=${b}&APPID=9daf49e00d734c44819461be295f9144`;
+    let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${a}&lon=${b}&APPID=9daf49e00d734c44819461be295f9144`;
 
     axios
       .get(url)
@@ -83,7 +83,7 @@ class Spots extends Component {
         this.setState({
           city: cityName,
           temperature: currentTemperature,
-          weatherIcon: "http://openweathermap.org/img/w/" + icon + ".png"
+          weatherIcon: "https://openweathermap.org/img/w/" + icon + ".png"
         });
         console.log("DATA ", response.data);
         console.log("WHEATHER FOR CITY", this.state.temperature);
