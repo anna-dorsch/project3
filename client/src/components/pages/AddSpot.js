@@ -81,7 +81,7 @@ class AddSpot extends Component {
       rating: this.state.rating,
       lng: this.state.lng,
       lat: this.state.lat,
-      address: this.state.searchText.surfSpot,
+      address: this.state.searchText,
       pictureUrl: this.state.pictureUrl
     };
     // console.log("sss", data.tag);
