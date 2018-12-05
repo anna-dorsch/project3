@@ -6364,8 +6364,6 @@ body {
     .Spots .row .col-text {
       padding: 20px;
       overflow-y: scroll; }
-      .Spots .row .col-text h2 {
-        text-align: center; }
       .Spots .row .col-text h4 {
         margin-top: 40px; }
     .Spots .row .map {

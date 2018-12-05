@@ -14,7 +14,8 @@ class Profile extends React.Component {
       email: "",
       URL: "",
       file: null,
-      message: null
+      message: null,
+      selectedOption: ""
     };
   }
 
@@ -24,7 +25,8 @@ class Profile extends React.Component {
         username: user.username,
         password: user.password,
         email: user.email,
-        URL: user.imageURL
+        URL: user.imageURL,
+        selectedOption: user.selectedOption
       });
     });
   }
@@ -53,54 +55,52 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="container">
-        <Row sm={5}>
-          <Col sm={5} className="col-text">
-            <h2>hi {this.state.username}</h2>
-            <Form>
-              <Row>
-                {this.state.URL !== "" && (
-                  <img
-                    src={this.state.URL}
-                    style={{ height: 150, width: 150 }}
-                  />
-                )}
-                {this.state.message && (
-                  <div className="info">{this.state.message}</div>
-                )}
-              </Row>
-              <Row sm={7}>Username:{this.state.username} </Row>
-              <Row sm={7}>Email: {this.state.email} </Row>
-              <Row sm={7}> </Row>
-              <FormGroup check inline />
-              <Row sm={7}>
-                <Form onSubmit={e => this.handleSubmit(e)}>
-                  <Input type="file" onChange={e => this.handleChange(e)} />{" "}
-                  <Button size="sm" outline color="info" type="submit">
-                    Upload
-                  </Button>
-                </Form>
-              </Row>
-              <Row sm={7}>
-                <Button
-                  size="sm"
-                  outline
-                  color="info"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Edit
+        <Col sm={5} className="col-text">
+          <Form>
+            <Row>
+              <h2>hi {this.state.username}</h2>
+            </Row>
+
+            <Row>
+              {this.state.URL !== "" && (
+                <img src={this.state.URL} style={{ height: 150 }} />
+              )}
+              {this.state.message && (
+                <div className="info">{this.state.message}</div>
+              )}
+            </Row>
+            <Row sm={7}>Username:{this.state.username} </Row>
+            <Row sm={7}>Email: {this.state.email} </Row>
+            <Row sm={7}> Your passion: {this.state.selectedOption} </Row>
+            <FormGroup check inline />
+            <Row sm={7}>
+              <Form onSubmit={e => this.handleSubmit(e)}>
+                <Input type="file" onChange={e => this.handleChange(e)} />{" "}
+                <Button size="sm" outline color="info" type="submit">
+                  Upload
                 </Button>
-                <Button
-                  size="sm"
-                  outline
-                  color="info"
-                  onClick={e => this.handleClick(e)}
-                >
-                  Delete
-                </Button>
-              </Row>
-            </Form>
-          </Col>
-        </Row>
+              </Form>
+            </Row>
+            <Row sm={7}>
+              <Button
+                size="sm"
+                outline
+                color="info"
+                onClick={e => this.handleClick(e)}
+              >
+                Edit
+              </Button>
+              <Button
+                size="sm"
+                outline
+                color="info"
+                onClick={e => this.handleClick(e)}
+              >
+                Delete
+              </Button>
+            </Row>
+          </Form>
+        </Col>
       </div>
     );
   }
