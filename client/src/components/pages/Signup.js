@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import api from "../../api";
-import { Button, Col, FormGroup, Label, Input, Form } from "reactstrap";
+import { Button,Row, Col, FormGroup, Label, Input, Form } from "reactstrap";
+// import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
 
 class Signup extends Component {
   constructor(props) {
@@ -9,14 +11,25 @@ class Signup extends Component {
       username: "",
       password: "",
       email: "",
-      message: null
+      URL: "",
+      file: null,
+      message: null,
+      selectedOption:""
     };
+    this.handleOptionChange=this.handleOptionChange.bind(this)
+    // this.handleInputChange=this.handleInputChange.bind(this)
   }
+  handleFileChange=(e)=> {
+    e.preventDefault()
+     this.setState({
+       file: e.target.files[0]
+     })
+   }
 
   handleInputChange(stateFieldName, event) {
     this.setState({
-      [stateFieldName]: event.target.value
-    });
+      [stateFieldName]: event.target.value,
+   });
   }
 
   handleClick(e) {
@@ -24,8 +37,14 @@ class Signup extends Component {
     let data = {
       username: this.state.username,
       password: this.state.password,
-      email: this.state.email
+      email: this.state.email,
+      // URL: this.state.URL,
+      selectedOption: this.state.selectedOption
     };
+    // api.addPicture(this.state.file).then(data => {
+    //   this.setState({
+    //     URL: data.URL,
+    //     message: null})})
     api
       .signup(data)
       .then(result => {
@@ -33,6 +52,12 @@ class Signup extends Component {
         this.props.history.push("/"); // Redirect to the home page
       })
       .catch(err => this.setState({ message: err.toString() }));
+  }
+  
+  handleOptionChange(changeEvent) {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
   }
 
   render() {
@@ -83,14 +108,49 @@ class Signup extends Component {
                 id="exampleEmail"
                 placeholder="crazyDiver666@coralreef.com"
               />
+               <FormGroup row>
+               <Label for="radio" sm={1}>
+              Your passion:
+            </Label> </FormGroup>
+             
+              <FormGroup check>
+              <Label check>
+                <Input type="radio" value="Dive" name="radio2"  onChange={this.handleOptionChange} />{' '}
+                Dive
+              </Label>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type="radio" value="Surf" name="radio2"  onChange={this.handleOptionChange} />{' '}
+                Surf
+              </Label></FormGroup>
+              <FormGroup check>
+              <Label check>
+                <Input type="radio" value="Surf&Dive" name="radio2" onChange={this.handleOptionChange} />{' '}
+                Surf&Dive
+              </Label></FormGroup>
+            {/* <FormGroup row>
+                <Label for="photo" xl={3}>
+                  Add a photo
+                </Label>
+                <Col xl={9}>
+                  <Input
+                    type="file"
+                    value={this.state.URL}
+                    name="spotPhoto"
+                    onChange={this.handleFileChange}
+                  />
+                </Col>
+              </FormGroup> */}
+
             </Col>
+
 
             <Button
               size="sm"
               outline
               color="info"
-              onClick={e => this.handleClick(e)}
-            >
+              onClick={e => this.handleClick(e)}>
               Signup
             </Button>
           </FormGroup>

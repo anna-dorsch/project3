@@ -3,6 +3,10 @@ import { Navbar, NavItem, NavLink } from "reactstrap";
 import { NavLink as NLink, Link } from "react-router-dom"; // Be careful, NavLink is already exported from 'reactstrap'
 // import logo from "../logo.svg";
 import api from "../api";
+import { Media } from 'reactstrap';
+import { Profile } from './pages/Profile';
+
+
 
 export default class MainNavbar extends Component {
   constructor(props) {
@@ -97,12 +101,17 @@ export default class MainNavbar extends Component {
             </NavItem>
           )}
         </div>
-
-        {/* <!-- Use any element to open the sidenav --> */}
+        <div>
+        {api.isLoggedIn() && (
+          <Media>
+        <Media href="/Profile">
+          <Media object src={{}}  alt="Generic placeholder image" />
+        </Media>
+        </Media>)}
         <span id="openNavbar" onClick={e => this.openNav(e)}>
           MENU
         </span>
-
+        </div>
         {/* <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page --> */}
         <div id="main" />
       </Navbar>
