@@ -32,8 +32,8 @@ router.post("/", isLoggedIn, (req, res, next) => {
     lng,
     lat,
     address,
-    tag
-    // pictureUrl
+    tag,
+    pictureUrl
   } = req.body;
   let _owner = req.user._id;
   if (!description || !rating || !lng || !lat || (!diveSpot && !surfSpot)) {
@@ -46,6 +46,7 @@ router.post("/", isLoggedIn, (req, res, next) => {
     description,
     rating,
     address,
+    pictureUrl,
     location: {
       type: "Point",
       coordinates: [lng, lat]

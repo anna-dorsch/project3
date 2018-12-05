@@ -7,6 +7,7 @@ const spotSchema = new Schema(
     diveSpot: { type: Boolean, required: true, default: false },
     title: { type: String },
     pictures: [String],
+    pictureUrl: String,
     description: { type: String, required: true },
     rating: { type: Number, required: true },
     address: String,

@@ -13,11 +13,13 @@ import SpotDetail from "./SpotDetail";
 import api from "../../api";
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
-// const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-// const geocodingClient = mbxGeocoding({
-//   accessToken:
-//     "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
-// });
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const geocodingClient = mbxGeocoding({
+  accessToken:
+    "pk.eyJ1IjoiYW5uYS1kb3JzY2giLCJhIjoiY2pvenlweTBxMDEwcDN2cDZnODE1b3drbiJ9.90Qojat5txlmFGgTnbP9PA"
+});
+
+// let newMarker;
 
 class Spots extends Component {
   constructor(props) {
@@ -27,11 +29,16 @@ class Spots extends Component {
       lng: 13.3711224,
       lat: 52.5063688,
       searchPlace: "",
-      filteredSuggestions: []
+      filteredSuggestions: [],
+      redMarkers: [],
+      newMarker: [],
+      pop: undefined
     };
     this.mapRef = React.createRef();
     this.map = null;
     this.markers = [];
+    this.layer = null;
+    // this.newMarker;
   }
   initMap() {
     // Embed the map where "this.mapRef" is defined in the render
@@ -42,17 +49,69 @@ class Spots extends Component {
       zoom: 1
     });
 
+    // this.map.on("load", function(e) {
+    //   this.map.addLayer({});
+    // });
+
     // Add zoom control on the top right corner
     this.map.addControl(new mapboxgl.NavigationControl());
   }
-  handleSpotSelection(iSelected) {
+
+  deleteArray() {
+    console.log("I am in delete");
+    this.setState({
+      redMarkers: []
+    });
+
+    console.log("arrayofMarker", this.state.redMarkers);
+    this.setStateToNewValue();
+  }
+
+  setStateToNewValue() {
+    this.setState({
+      redMarkers: [...this.state.redMarkers, this.state.newMarker]
+    });
+  }
+
+  async handleSpotSelection(iSelected) {
+    // this is working
     this.map.setCenter(this.state.spots[iSelected].location.coordinates);
+
+    let lng = this.state.spots[iSelected].location.coordinates[0];
+    let lat = this.state.spots[iSelected].location.coordinates[1];
+
+    let address = this.state.spots[iSelected].address;
+
+    // this.Marker.setPopup(
+    //   new mapboxgl.Popup({ offset: -30, anchor: "center" }).setText(address)
+    // ).addTo(this.map);
+
+    // this.state.newMarker = new mapboxgl.Popup({
+    //   closeOnClick: false,
+    //   closeOnOutsideClick: true
+    // })
+    //   .setLngLat([lng, lat])
+    //   .setHTML("<p>" + address + "</p>")
+    //   .addTo(this.map);
+
+    // console.log("here", this.state.newMarker);
+    // console.log("arrayofMarker", this.state.redMarkers);
+
+    // this.state.newMarker = new mapboxgl.Marker({ color: "red" })
+    //   .setLngLat([lng, lat])
+    //   .on("click", () => {
+    //     console.log("clicked");
+    //   })
+    //   .setPopup(
+    //     new mapboxgl.Popup({ offset: -30, anchor: "center" }).setText(address)
+    //   )
+    //   .addTo(this.map);
   }
 
   //trying to filter the spots
   placeSearchChange = e => {
     const value = e.target.value;
-    console.log("trying", value);
+
     const array = this.state.spots;
 
     const filteredSuggestions = array.filter(
@@ -67,12 +126,10 @@ class Spots extends Component {
       searchPlace: value,
       suggestions: filteredSuggestions
     });
-    console.log("filter", filteredSuggestions);
-    console.log("search", this.state.searchPlace);
-    console.log("trying again", this.state.suggestions);
   };
 
   render() {
+    console.log(this.state.newMarker);
     // console.log("spots", this.state.spots);
     return (
       <div className="spots">
@@ -112,11 +169,7 @@ class Spots extends Component {
                     to={"/spots/" + h._id}
                     onClick={() => this.handleSpotSelection(i)}
                   >
-                    <p>
-                      {h.title}
-                      {/* {h.address} */}
-                      {/* by {h._owner.username} */}
-                    </p>
+                    <p>{h.title}</p>
                   </ListGroupItem>
                 ))}
               </ListGroup>
@@ -144,17 +197,23 @@ class Spots extends Component {
     api
       .getSpots()
       .then(spots => {
-        // console.log(spots);
         this.setState({
           spots: spots.map(spot => {
+            console.log(spot.address);
             const [lng, lat] = spot.location.coordinates;
+            const address = spot.address;
             return {
               ...spot,
-              marker: new mapboxgl.Marker({ color: "blue" })
+              marker: new mapboxgl.Marker({ color: "green" })
                 .setLngLat([lng, lat])
                 .on("click", () => {
                   console.log("clicked");
                 })
+                .setPopup(
+                  new mapboxgl.Popup({ offset: 30, anchor: "center" }).setText(
+                    address
+                  )
+                )
                 .addTo(this.map)
             };
           })
