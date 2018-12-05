@@ -54,14 +54,16 @@ class Autocomplete extends Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: [e.currentTarget.innerText],
-      userResults: [...this.state.userResults, e.currentTarget.innerText]
+      userResults: [...this.state.userResults, e.currentTarget.innerText],
+      // userInput: [e.currentTarget.innerText]
+      userInput: ""
     });
   };
 
   // Event fired when the user presses a key down
   onKeyDown = e => {
     const { activeSuggestion, filteredSuggestions } = this.state;
+    console.log("Future", this.state.userInput);
 
     // User pressed the enter key, update the input and close the
     // suggestions

@@ -7,10 +7,12 @@ import {
   Row,
   FormGroup,
   Label,
-  Input
+  Input,
+  Button
 } from "reactstrap";
 import SpotDetail from "./SpotDetail";
 import api from "../../api";
+import axios from "axios";
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
@@ -32,7 +34,11 @@ class Spots extends Component {
       filteredSuggestions: [],
       redMarkers: [],
       newMarker: [],
-      pop: undefined
+      pop: undefined,
+
+      city: "",
+      temperature: "",
+      weatherIcon: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -48,11 +54,6 @@ class Spots extends Component {
       center: [this.state.lng, this.state.lat], // Africa lng,lat
       zoom: 1
     });
-
-    // this.map.on("load", function(e) {
-    //   this.map.addLayer({});
-    // });
-
     // Add zoom control on the top right corner
     this.map.addControl(new mapboxgl.NavigationControl());
   }
@@ -62,9 +63,35 @@ class Spots extends Component {
     this.setState({
       redMarkers: []
     });
-
     console.log("arrayofMarker", this.state.redMarkers);
     this.setStateToNewValue();
+  }
+
+  getWeather(a, b) {
+    var api_key = "9daf49e00d734c44819461be295f9144";
+    let url = `http://api.openweathermap.org/data/2.5/forecast?lat=${a}&lon=${b}&APPID=9daf49e00d734c44819461be295f9144`;
+
+    axios
+      .get(url)
+      .then(response => {
+        let cityName = response.data.city.name;
+        let currentTemperature =
+          Math.floor(response.data.list[0].main.temp - 273.15) + "°C";
+
+        let icon = response.data.list[0].weather[0].icon;
+        console.log("ICON", icon);
+        this.setState({
+          city: cityName,
+          temperature: currentTemperature,
+          weatherIcon: "http://openweathermap.org/img/w/" + icon + ".png"
+        });
+        console.log("DATA ", response.data);
+        console.log("WHEATHER FOR CITY", this.state.temperature);
+        console.log("maybe the URL?", this.state.weatherIcon);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   setStateToNewValue() {
@@ -79,41 +106,14 @@ class Spots extends Component {
 
     let lng = this.state.spots[iSelected].location.coordinates[0];
     let lat = this.state.spots[iSelected].location.coordinates[1];
-
-    let address = this.state.spots[iSelected].address;
-
-    // this.Marker.setPopup(
-    //   new mapboxgl.Popup({ offset: -30, anchor: "center" }).setText(address)
-    // ).addTo(this.map);
-
-    // this.state.newMarker = new mapboxgl.Popup({
-    //   closeOnClick: false,
-    //   closeOnOutsideClick: true
-    // })
-    //   .setLngLat([lng, lat])
-    //   .setHTML("<p>" + address + "</p>")
-    //   .addTo(this.map);
-
-    // console.log("here", this.state.newMarker);
-    // console.log("arrayofMarker", this.state.redMarkers);
-
-    // this.state.newMarker = new mapboxgl.Marker({ color: "red" })
-    //   .setLngLat([lng, lat])
-    //   .on("click", () => {
-    //     console.log("clicked");
-    //   })
-    //   .setPopup(
-    //     new mapboxgl.Popup({ offset: -30, anchor: "center" }).setText(address)
-    //   )
-    //   .addTo(this.map);
+    // console.log("line 85", lng, lat);
+    this.getWeather(lat, lng);
   }
 
   //trying to filter the spots
   placeSearchChange = e => {
     const value = e.target.value;
-
     const array = this.state.spots;
-
     const filteredSuggestions = array.filter(
       suggestion =>
         suggestion
@@ -121,7 +121,6 @@ class Spots extends Component {
           .toLowerCase()
           .indexOf(value.toLowerCase()) > -1
     );
-
     this.setState({
       searchPlace: value,
       suggestions: filteredSuggestions
@@ -129,7 +128,6 @@ class Spots extends Component {
   };
 
   render() {
-    console.log(this.state.newMarker);
     // console.log("spots", this.state.spots);
     return (
       <div className="spots">
@@ -137,9 +135,9 @@ class Spots extends Component {
           <Col md={3} className="col-text">
             {/* new code */}
             <FormGroup row>
-              <Label for="searchPlace" xl={3}>
+              {/* <Label for="searchPlace" xl={3}>
                 Search for Places
-              </Label>
+              </Label> */}
               <Col xl={9}>
                 <Input
                   placeholder="find a spot"
@@ -188,31 +186,48 @@ class Spots extends Component {
           </Col>
           <Col sm={5}>
             <div ref={this.mapRef} className="map" style={{ height: 400 }} />
+            <div class="curWeather">
+              <div>City: {this.state.city}</div>
+              <div>Weather: {this.state.temperature}</div>
+              <img
+                src={this.state.weatherIcon}
+                alt=""
+                srcset=""
+                style={{ height: 70 }}
+              />
+              <Button color="primary">5 day Forecast</Button>
+            </div>
           </Col>
         </Row>
       </div>
     );
   }
+
   componentDidMount() {
     api
       .getSpots()
       .then(spots => {
         this.setState({
           spots: spots.map(spot => {
-            console.log(spot.address);
+            // console.log(spot.address);
             const [lng, lat] = spot.location.coordinates;
             const address = spot.address;
+            let varColor = "green";
             return {
               ...spot,
-              marker: new mapboxgl.Marker({ color: "green" })
+              marker: new mapboxgl.Marker({
+                color: varColor
+              })
                 .setLngLat([lng, lat])
                 .on("click", () => {
                   console.log("clicked");
                 })
                 .setPopup(
-                  new mapboxgl.Popup({ offset: 30, anchor: "center" }).setText(
-                    address
-                  )
+                  new mapboxgl.Popup({
+                    offset: 30,
+                    anchor: "center",
+                    type: "line-center"
+                  }).setText(address)
                 )
                 .addTo(this.map)
             };

@@ -226,7 +226,12 @@ body {
   display: none;
 }
 
-.mapboxgl-marker mapboxgl-marker-anchor-center {
-  fill: pink;
-  color: pink;
+// g {
+//   fill: pink;
+// }
+
+.curWeather {
+  // display: flex;
+  // flex-direction: column;
+  margin-top: 20px;
 }
