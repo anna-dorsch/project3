@@ -36,7 +36,7 @@ class Profile extends React.Component {
     this.setState({
       file: e.target.files[0]
     });
-    // console.log("URL", this.state.URL);
+    console.log("PROFILE.JS URL", this.state.URL);
   }
 
   handleSubmit(e) {

@@ -38,7 +38,8 @@ class Spots extends Component {
 
       city: "",
       temperature: "",
-      weatherIcon: ""
+      weatherIcon: "",
+      cityID: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -67,27 +68,63 @@ class Spots extends Component {
     this.setStateToNewValue();
   }
 
-  getWeather(a, b) {
-    var api_key = "9daf49e00d734c44819461be295f9144";
+  getForecast(a, b) {
     let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${a}&lon=${b}&APPID=9daf49e00d734c44819461be295f9144`;
+    axios
+      .get(url)
+      .then(response => {
+        for (let i = 6; i < response.data.list.length; i + 6) {
+          console.log("DATA", response.data);
+          let cityName = response.data.city.name;
+          let currentTemperature =
+            Math.floor(response.data.list[i].main.temp - 273.15) + "°C";
+
+          let icon = response.data.list[i].weather[0].icon;
+          let cityID = response.data.city.id;
+          console.log("CityName", cityName);
+          // console.log("ICON", icon);
+          // this.setState({
+          //   city: cityName,
+          //   temperature: currentTemperature,
+          //   weatherIcon: "https://openweathermap.org/img/w/" + icon + ".png",
+          //   cityID: cityID
+          // });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios.get(URL).then(res => {
+      console.log("response", res.data);
+    });
+  }
+
+  getWeather(c, d) {
+    let api_key = "9daf49e00d734c44819461be295f9144";
+    let url = `https://api.openweathermap.org/data/2.5/forecast?lat=${c}&lon=${d}&APPID=9daf49e00d734c44819461be295f9144`;
 
     axios
       .get(url)
       .then(response => {
+        console.log("DATA", response.data);
         let cityName = response.data.city.name;
         let currentTemperature =
           Math.floor(response.data.list[0].main.temp - 273.15) + "°C";
 
         let icon = response.data.list[0].weather[0].icon;
-        console.log("ICON", icon);
+        let cityID = response.data.city.id;
+        console.log("IDDDD", cityID);
+        // console.log("ICON", icon);
         this.setState({
           city: cityName,
           temperature: currentTemperature,
-          weatherIcon: "https://openweathermap.org/img/w/" + icon + ".png"
+          temperatureItems: response.data.list.filter(
+            item => item.dt_txt.substr(-8) === "12:00:00"
+          ),
+          weatherIcon: "https://openweathermap.org/img/w/" + icon + ".png",
+          cityID: cityID
         });
-        // console.log("DATA ", response.data);
-        // console.log("WHEATHER FOR CITY", this.state.temperature);
-        // console.log("maybe the URL?", this.state.weatherIcon);
       })
       .catch(error => {
         console.log(error);
@@ -100,7 +137,7 @@ class Spots extends Component {
     });
   }
 
-  async handleSpotSelection(iSelected) {
+  handleSpotSelection(iSelected) {
     // this is working
     this.map.setCenter(this.state.spots[iSelected].location.coordinates);
 
@@ -125,6 +162,10 @@ class Spots extends Component {
       searchPlace: value,
       suggestions: filteredSuggestions
     });
+  };
+
+  handleClick = e => {
+    console.log("hello");
   };
 
   render() {
@@ -186,20 +227,61 @@ class Spots extends Component {
           </Col>
           <Col sm={5}>
             <div ref={this.mapRef} className="map" style={{ height: 400 }} />
-            <div class="curWeather">
-              <div>Weather: {this.state.temperature}</div>
-              <img
-                src={this.state.weatherIcon}
-                alt=""
-                srcset=""
-                style={{ height: 70 }}
-              />
-              <Button color="primary">5 day Forecast</Button>
+
+            <div className="curWeather">
+              {this.state.temperature !== "" && (
+                <div>
+                  Weather: {this.state.temperature}{" "}
+                  <img
+                    src={this.state.weatherIcon}
+                    alt=""
+                    srcset=""
+                    style={{ height: 70 }}
+                  />
+                  {/* <Button color="primary" onClick={e => this.getForecast(e)}>
+                    5 day Forecast
+                  </Button> */}
+                  <hr />
+                  {this.state.temperatureItems.map(item => (
+                    <div key={item.dt_txt}>
+                      <img src={this.getIcon(item)} />
+                      <br />
+                      {this.getCelcius(item)}
+                      <br />
+                      {this.getDay(item)}
+                      {/* <pre>{JSON.stringify(item, null, 2)}</pre> */}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </Col>
         </Row>
       </div>
     );
+  }
+
+  getIcon(temperatureItem) {
+    return (
+      "https://openweathermap.org/img/w/" +
+      temperatureItem.weather[0].icon +
+      ".png"
+    );
+  }
+
+  getCelcius(temperatureItem) {
+    return Math.round(temperatureItem.main.temp - 273.15) + "°C";
+  }
+
+  getDay(temperatureItem) {
+    switch (new Date(temperatureItem.dt_txt).getDay()) {
+      case 0:
+        return "Sunday";
+      case 5:
+        return "Friday";
+      default:
+        return "Saturday";
+    }
   }
 
   componentDidMount() {

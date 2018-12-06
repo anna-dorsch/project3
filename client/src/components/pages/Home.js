@@ -1,4 +1,14 @@
 import React, { Component } from "react";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row
+} from "reactstrap";
 // import api from '../../api';
 
 class Home extends Component {
@@ -10,9 +20,12 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
-        <h2>Home</h2>
-        <p>This is Immerse </p>
-        {/* <button className="btn btn-primary">Hello</button> */}
+        <div class="homeBackground">
+          <div class="buttonWrapper">
+            <button class="buttons surfButton">SURF</button>
+            <button class="buttons diveButton">DIVE</button>
+          </div>
+        </div>
       </div>
     );
   }

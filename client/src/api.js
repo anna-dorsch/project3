@@ -95,11 +95,24 @@ export default {
       .catch(errHandler);
   },
 
-  addSpotPicture(spotPicture) {
-    const formDataSpot = new FormData();
-    formDataSpot.append("spots", spotPicture);
+  addSimplePicture(file) {
+    const formData = new FormData();
+    formData.append("picture", file);
     return service
-      .post("/spots", formDataSpot, {
+      .post("/simple-picture", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      .then(res => res.data)
+      .catch(errHandler);
+  },
+
+  addPicture2(picFile) {
+    const formData = new FormData();
+    formData.append("picture", picFile);
+    return service
+      .post("/picture", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
@@ -107,4 +120,17 @@ export default {
       .then(res => res.data)
       .catch(errHandler);
   }
+
+  // addSpotPicture(spotPicture) {
+  //   const formDataSpot = new FormData();
+  //   formDataSpot.append("spots", spotPicture);
+  //   return service
+  //     .post("/spots", formDataSpot, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data"
+  //       }
+  //     })
+  //     .then(res => res.data)
+  //     .catch(errHandler);
+  // }
 };

@@ -1,14 +1,13 @@
-const express = require('express');
-const { isLoggedIn } = require('../middlewares')
+const express = require("express");
+const { isLoggedIn } = require("../middlewares");
 const router = express.Router();
+const parser = require("../configs/cloudinary.js");
 
-router.get('/secret', isLoggedIn, (req, res, next) => {
+router.post("/simple-picture", parser.single("picture"), (req, res, next) => {
   res.json({
-    secret: 42,
-    user: req.user
+    success: true,
+    pictureUrl: req.file.url
   });
 });
-
-
 
 module.exports = router;

@@ -211,22 +211,25 @@ class AddSpot extends Component {
     this.marker.setLngLat(center);
   }
 
-  handleChange(e) {
-    // console.log("url.name", this.state.pictureUrl.name);
-    console.log("is this the URL", this.state.pictureUrl);
+  handleFileChange(e) {
+    console.log("url.name", this.state.pictureUrl.name);
     e.preventDefault();
     // console.log("picture1", e.target.files[0].name)
-    this.setState({
-      // pictureUrl: e.target.files[0].name,
-      file: e.target.files[0]
-    });
-    api.addSpotPicture(this.state.file).then(url => {
-      this.setState({
-        pictureUrl: url.pictureUrl,
-        message: null
-      });
-      console.log("this is the url", this.state.pictureUrl);
-    });
+    this.setState(
+      {
+        // pictureUrl: e.target.files[0].name,
+        file: e.target.files[0]
+      },
+      () => {
+        api.addSimplePicture(this.state.file).then(url => {
+          this.setState({
+            pictureUrl: url.pictureUrl,
+            message: null
+          });
+          console.log("this is the url", this.state.pictureUrl);
+        });
+      }
+    );
   }
 
   render() {
@@ -273,6 +276,87 @@ class AddSpot extends Component {
                     name="title"
                     onChange={this.handleInputChange}
                   />
+                </Col>
+              </FormGroup>
+
+              {/* new code */}
+              {/* the user can search for the address of the place he is about to add */}
+              <FormGroup row>
+                <Label for="search" xl={3}>
+                  Address
+                </Label>
+                <Col xl={9}>
+                  <Input
+                    type="text"
+                    value={this.state.searchText || this.state.address}
+                    name="searchText"
+                    onChange={this.handleSearchChange}
+                  />
+
+                  {this.state.searchResults.map(result => (
+                    <div onClick={e => this.handleSearchResultClick(result)}>
+                      {result.place_name}
+                      <hr />
+                    </div>
+                  ))}
+                </Col>
+              </FormGroup>
+              {/* /new code */}
+
+              {/* the user can get the address by typing in the latitude and longitude of the place he is about to enter */}
+              <FormGroup row>
+                <Label for="title" xl={3}>
+                  Longitude/Latitude
+                </Label>
+                <Col xl={9}>
+                  <Row>
+                    <Col sm={6}>
+                      <Input
+                        type="number"
+                        value={this.state.lng}
+                        name="lng"
+                        onChange={this.handleInputChange}
+                      />
+                    </Col>
+                    <Col sm={6}>
+                      <Input
+                        type="number"
+                        value={this.state.lat}
+                        name="lat"
+                        min="-90"
+                        max="90"
+                        onChange={this.handleInputChange}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </FormGroup>
+
+              {/* the user has to add a rating to the spot */}
+              <FormGroup row>
+                <Label for="rating" xl={3}>
+                  Rating
+                </Label>
+                <Col xl={9}>
+                  <Input
+                    type="select"
+                    name="rating"
+                    id="exampleSelect"
+                    value={this.state.rating}
+                    onChange={this.handleInputChange}
+                  >
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                  </Input>
                 </Col>
               </FormGroup>
 
@@ -376,91 +460,10 @@ class AddSpot extends Component {
                     type="file"
                     value={this.state.pictureUrl.name}
                     name="spotPhoto"
-                    onChange={e => this.handleChange(e)}
+                    onChange={e => this.handleFileChange(e)}
                   />
                 </Col>
               </FormGroup>
-
-              {/* the user has to add a rating to the spot */}
-              <FormGroup row>
-                <Label for="rating" xl={3}>
-                  Rating
-                </Label>
-                <Col xl={9}>
-                  <Input
-                    type="select"
-                    name="rating"
-                    id="exampleSelect"
-                    value={this.state.rating}
-                    onChange={this.handleInputChange}
-                  >
-                    <option>0</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                  </Input>
-                </Col>
-              </FormGroup>
-
-              {/* the user can get the address by typing in the latitude and longitude of the place he is about to enter */}
-              <FormGroup row>
-                <Label for="title" xl={3}>
-                  Longitude/Latitude
-                </Label>
-                <Col xl={9}>
-                  <Row>
-                    <Col sm={6}>
-                      <Input
-                        type="number"
-                        value={this.state.lng}
-                        name="lng"
-                        onChange={this.handleInputChange}
-                      />
-                    </Col>
-                    <Col sm={6}>
-                      <Input
-                        type="number"
-                        value={this.state.lat}
-                        name="lat"
-                        min="-90"
-                        max="90"
-                        onChange={this.handleInputChange}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-              </FormGroup>
-
-              {/* new code */}
-              {/* the user can search for the address of the place he is about to add */}
-              <FormGroup row>
-                <Label for="search" xl={3}>
-                  Place
-                </Label>
-                <Col xl={9}>
-                  <Input
-                    type="text"
-                    value={this.state.searchText || this.state.address}
-                    name="searchText"
-                    onChange={this.handleSearchChange}
-                  />
-
-                  {this.state.searchResults.map(result => (
-                    <div onClick={e => this.handleSearchResultClick(result)}>
-                      {result.place_name}
-                      <hr />
-                    </div>
-                  ))}
-                </Col>
-              </FormGroup>
-              {/* /new code */}
 
               {/* button to create the place and save the data into the database */}
               <FormGroup row>
