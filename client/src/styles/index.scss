@@ -84,10 +84,10 @@ body {
 }
 
 .Home {
-  background-image: url("/noSky.png");
+  background-image: url("/noSky2.png");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 1100px;
+  height: 700px;
   background-position-y: 50%;
   // width: 100;
 }
@@ -103,16 +103,25 @@ body {
   color: rgba(255, 255, 255, 0.7);
   background-color: transparent;
   padding: 50px;
-  border: 5px solid rgba(255, 255, 255, 0.7);
+  border: 5px solid rgba(255, 255, 255, 0.5);
   font-size: 40px;
 }
 
 .diveButton {
-  margin-top: 100px;
+  margin-top: 125px;
+  border-radius: 15px;
 }
 
 .surfButton {
   margin-top: 80px;
+  border-radius: 15px;
+}
+
+.buttons:hover {
+  padding: 52px;
+  color: rgbargba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 5px solid rgba(255, 255, 255, 0);
 }
 
 .Spots {
@@ -276,14 +285,14 @@ body {
   flex-direction: row;
   justify-content: center;
   // margin-top: 12%;
-  align-content: center; 
+  align-content: center;
 }
 
 .formContainer {
   // display: flex;
 }
 
-.radio{
+.radio {
   padding-top: 10px;
 }
 .navbar {
