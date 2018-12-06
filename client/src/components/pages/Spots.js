@@ -466,6 +466,44 @@ class Spots extends Component {
       .then(spots => {
         this.setState({
           diveCheck: this.props.location.query,
+          originalArray: spots
+        });
+        console.log("checkes?", this.state.diveCheck);
+        if (this.state.diveCheck === "checked") {
+          this.setStateBack();
+          this.initMap();
+          this.setState({
+            spots: this.state.spots
+              .filter(spot => spot.diveSpot)
+              .sort()
+              .map(spot => {
+                const [lng, lat] = spot.location.coordinates;
+                const address = spot.address;
+                var varColor = "#155662";
+
+                return {
+                  ...spot,
+
+                  marker: new mapboxgl.Marker({
+                    color: varColor
+                  })
+                    .setLngLat([lng, lat])
+                    .on("click", () => {
+                      console.log("clicked");
+                    })
+                    .setPopup(
+                      new mapboxgl.Popup({
+                        offset: 30,
+                        anchor: "center",
+                        type: "line-center"
+                      }).setText(address || spot.title)
+                    )
+                    .addTo(this.map)
+                };
+              })
+            // console.log("divepots", this.state.spots);
+          });
+        } else {
           spots: spots.sort().map(spot => {
             // console.log(spot.address);
             const [lng, lat] = spot.location.coordinates;
@@ -499,9 +537,9 @@ class Spots extends Component {
                 )
                 .addTo(this.map)
             };
-          }),
-          originalArray: spots
-        });
+          });
+        }
+
         // console.log("Spotsarray", this.state.spots);
         setTimeout(() => {
           console.log("originalArray", this.state.originalArray);
