@@ -6505,9 +6505,8 @@ body {
   color: #177e89; }
 
 .getHome {
-  position: absolute;
-  left: 25px;
-  margin-left: 50px;
+  position: relative;
+  margin-left: 10px;
   color: rgba(255, 255, 255, 0.7);
   padding-top: 5px;
   font-size: 20px; }
@@ -6525,10 +6524,14 @@ body {
   align-content: center; }
 
 .radio {
-  padding-top: 10px; }
+  padding-top: 10px;
+  padding-bottom: 10px; }
 
 .navbar {
   background-image: url("/background.png"); }
+
+.AddSpot {
+  padding: 50px; }
 
 .weatherForecast {
   display: flex;

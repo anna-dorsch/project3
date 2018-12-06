@@ -246,15 +246,15 @@ class AddSpot extends Component {
           <Col md={6}>
             <Form>
               {/* checking whether it is a dive or a surfspot */}
-              {/* <FormGroup> */}
-              <Col sm={1}>
+              <FormGroup row>
+              <Col className="radio" sm={1}>
                 <Label check for="type">
                   <CustomInput type="radio" id="exampleCustomRadio" value="Divespot" name="customRadio" label="Divespot" onChange={(e) => this.handleOptionChange(e)} />
                   <CustomInput type="radio" id="exampleCustomRadio2" value="Surfpot" name="customRadio" label="Surfspot" onChange={(e) => this.handleOptionChange(e)} />
                   <CustomInput type="radio" id="exampleCustomRadio3" value="Divespot&Surfspot" name="customRadio" label="Divespot&Surfspot" onChange={(e) => this.handleOptionChange(e)} />
                 </Label>
                 </Col>
-              {/* </FormGroup> */}
+              </FormGroup >
 
               {/* the user can give the place a personal Name */}
               <FormGroup row>
@@ -459,9 +459,9 @@ class AddSpot extends Component {
 
               {/* button to create the place and save the data into the database */}
               <FormGroup row>
-                <Col xl={{ size: 9, offset: 3 }}>
-                  <Button color="primary" onClick={e => this.handleClick(e)}>
-                    Create it!
+                <Col xl={{ size: 9, offset: 10 }}>
+                  <Button outline color="primary" onClick={e => this.handleClick(e)}>
+                    Create Spot
                   </Button>
                 </Col>
               </FormGroup>
