@@ -234,7 +234,7 @@ class AddSpot extends Component {
 
   render() {
     return (
-      <Container className="AddSpot">
+      <div className="AddSpot">
         <h2>Add a Dive Spot</h2>
 
         <Row>
@@ -485,7 +485,7 @@ class AddSpot extends Component {
         </Row>
 
         {this.state.message && <div className="info">{this.state.message}</div>}
-      </Container>
+      </div>
     );
   }
 }

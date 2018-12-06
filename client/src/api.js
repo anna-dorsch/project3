@@ -106,7 +106,7 @@ export default {
       .then(res => res.data)
       .catch(errHandler)
   },
-}
+
 
 
   addSimplePicture(file) {
