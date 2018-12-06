@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import api from "../../api";
 
-
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 import Autocomplete from "./Autocomplete";
 // import { render } from "react-dom";
@@ -40,14 +39,14 @@ class AddSpot extends Component {
       address: "",
       pictureUrl: "",
       file: null,
-      selectedOption:""
+      selectedOption: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
     this.marker = null;
-    this.handleOptionChange=this.handleOptionChange.bind(this)
+    this.handleOptionChange = this.handleOptionChange.bind(this);
   }
-  
+
   handleInputChange = event => {
     let name = event.target.name;
     const value =
@@ -229,7 +228,8 @@ class AddSpot extends Component {
           });
           console.log("this is the url", this.state.pictureUrl);
         });
-      });
+      }
+    );
   }
   handleOptionChange(changeEvent) {
     this.setState({
@@ -247,14 +247,35 @@ class AddSpot extends Component {
             <Form>
               {/* checking whether it is a dive or a surfspot */}
               <FormGroup row>
-              <Col className="radio" sm={1}>
-                <Label check for="type">
-                  <CustomInput type="radio" id="exampleCustomRadio" value="Divespot" name="customRadio" label="Divespot" onChange={(e) => this.handleOptionChange(e)} />
-                  <CustomInput type="radio" id="exampleCustomRadio2" value="Surfpot" name="customRadio" label="Surfspot" onChange={(e) => this.handleOptionChange(e)} />
-                  <CustomInput type="radio" id="exampleCustomRadio3" value="Divespot&Surfspot" name="customRadio" label="Divespot&Surfspot" onChange={(e) => this.handleOptionChange(e)} />
-                </Label>
+                <Col className="radio" sm={1}>
+                  <Label check for="type">
+                    <CustomInput
+                      type="radio"
+                      id="exampleCustomRadio"
+                      value="Divespot"
+                      name="customRadio"
+                      label="Divespot"
+                      onChange={e => this.handleOptionChange(e)}
+                    />
+                    <CustomInput
+                      type="radio"
+                      id="exampleCustomRadio2"
+                      value="Surfpot"
+                      name="customRadio"
+                      label="Surfspot"
+                      onChange={e => this.handleOptionChange(e)}
+                    />
+                    <CustomInput
+                      type="radio"
+                      id="exampleCustomRadio3"
+                      value="Divespot&Surfspot"
+                      name="customRadio"
+                      label="Divespot&Surfspot"
+                      onChange={e => this.handleOptionChange(e)}
+                    />
+                  </Label>
                 </Col>
-              </FormGroup >
+              </FormGroup>
 
               {/* the user can give the place a personal Name */}
               <FormGroup row>
@@ -460,7 +481,11 @@ class AddSpot extends Component {
               {/* button to create the place and save the data into the database */}
               <FormGroup row>
                 <Col xl={{ size: 9, offset: 10 }}>
-                  <Button outline color="primary" onClick={e => this.handleClick(e)}>
+                  <Button
+                    outline
+                    color="primary"
+                    onClick={e => this.handleClick(e)}
+                  >
                     Create Spot
                   </Button>
                 </Col>
