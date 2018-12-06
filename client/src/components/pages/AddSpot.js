@@ -212,14 +212,15 @@ class AddSpot extends Component {
   }
 
   handleChange(e) {
-    console.log("url.name", this.state.pictureUrl.name);
+    // console.log("url.name", this.state.pictureUrl.name);
+    console.log("is this the URL", this.state.pictureUrl);
     e.preventDefault();
     // console.log("picture1", e.target.files[0].name)
     this.setState({
       // pictureUrl: e.target.files[0].name,
       file: e.target.files[0]
     });
-    api.addPicture(this.state.file).then(url => {
+    api.addSpotPicture(this.state.file).then(url => {
       this.setState({
         pictureUrl: url.pictureUrl,
         message: null

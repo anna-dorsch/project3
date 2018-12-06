@@ -43,7 +43,6 @@ router.delete('/users/:id', isLoggedIn, (req, res, next) => {
   let id = req.params.id
   User.findByIdAndDelete(id)
     .then(userDoc => {
-      req.logout()
       res.json({
         // !!myVariable converts truthy to true and falsy to false
         success: !!userDoc,

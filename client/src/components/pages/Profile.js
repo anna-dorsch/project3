@@ -92,7 +92,7 @@ class Profile extends React.Component {
             <FormGroup check inline />
             <Row sm={7}>
               <Form onSubmit={e => this.handleSubmit(e)}>
-                <Input type="file" onChange={e => this.handleChange(e)} />{" "}
+                <Input type="file" onChange={e => this.handleChange(e)} />
                 <Button size="sm" outline color="info" type="submit">
                   Upload
                 </Button>

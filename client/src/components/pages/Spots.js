@@ -85,9 +85,9 @@ class Spots extends Component {
           temperature: currentTemperature,
           weatherIcon: "https://openweathermap.org/img/w/" + icon + ".png"
         });
-        console.log("DATA ", response.data);
-        console.log("WHEATHER FOR CITY", this.state.temperature);
-        console.log("maybe the URL?", this.state.weatherIcon);
+        // console.log("DATA ", response.data);
+        // console.log("WHEATHER FOR CITY", this.state.temperature);
+        // console.log("maybe the URL?", this.state.weatherIcon);
       })
       .catch(error => {
         console.log(error);
@@ -187,7 +187,6 @@ class Spots extends Component {
           <Col sm={5}>
             <div ref={this.mapRef} className="map" style={{ height: 400 }} />
             <div class="curWeather">
-              <div>City: {this.state.city}</div>
               <div>Weather: {this.state.temperature}</div>
               <img
                 src={this.state.weatherIcon}
@@ -227,7 +226,7 @@ class Spots extends Component {
                     offset: 30,
                     anchor: "center",
                     type: "line-center"
-                  }).setText(address)
+                  }).setText(address || spot.title)
                 )
                 .addTo(this.map)
             };
