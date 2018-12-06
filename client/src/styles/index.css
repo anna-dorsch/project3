@@ -6354,8 +6354,37 @@ body {
   .MainNavbar .navbar-brand {
     padding: 4px 0 0 0; }
 
+.mapboxgl-control-container {
+  z-index: 10; }
+
 .Home p {
   font-size: 1.2em; }
+
+.Home {
+  background-image: url("/noSky.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 1100px;
+  background-position-y: 50%; }
+
+.buttonWrapper {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; }
+
+.buttons {
+  color: rgba(255, 255, 255, 0.7);
+  background-color: transparent;
+  padding: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.7);
+  font-size: 40px; }
+
+.diveButton {
+  margin-top: 100px; }
+
+.surfButton {
+  margin-top: 80px; }
 
 .Spots {
   margin-top: -20px; }
@@ -6400,7 +6429,7 @@ body {
   /* 0 width - change this with JavaScript */
   position: fixed;
   /* Stay in place */
-  z-index: 1;
+  z-index: 3;
   /* Stay on top */
   top: 0;
   /* Stay at the top */
@@ -6454,7 +6483,7 @@ body {
   position: absolute;
   right: 25px;
   margin-left: 50px;
-  color: #818181;
+  color: rgba(255, 255, 255, 0.7);
   padding-top: 25px;
   font-size: 20px; }
 
@@ -6465,7 +6494,7 @@ body {
   position: absolute;
   left: 25px;
   margin-left: 50px;
-  color: #818181;
+  color: rgba(255, 255, 255, 0.7);
   padding-top: 5px;
   font-size: 20px; }
 
@@ -6483,3 +6512,5 @@ body {
 
 .radio {
   padding-top: 10px; }
+.navbar {
+  background-image: url("/background.png"); }

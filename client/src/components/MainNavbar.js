@@ -3,10 +3,8 @@ import { Navbar, NavItem, NavLink } from "reactstrap";
 import { NavLink as NLink, Link } from "react-router-dom"; // Be careful, NavLink is already exported from 'reactstrap'
 // import logo from "../logo.svg";
 import api from "../api";
-import { Media } from 'reactstrap';
-import { Profile } from './pages/Profile';
-
-
+import { Media } from "reactstrap";
+import { Profile } from "./pages/Profile";
 
 export default class MainNavbar extends Component {
   constructor(props) {
@@ -29,19 +27,20 @@ export default class MainNavbar extends Component {
   openNav() {
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
-    document.getElementById("openNavbar").style.color = "white";
+    document.getElementById("openNavbar").style.color = "transparent";
   }
 
   /* Set the width of the side navigation to 0 */
   closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
-    document.getElementById("openNavbar").style.color = "#818181";
+    document.getElementById("openNavbar").style.color =
+      "rgba(255, 255, 255, 0.7)";
   }
 
   render() {
     return (
-      <Navbar>
+      <Navbar class="navbar">
         <NavItem>
           <NavLink className="getHome" tag={NLink} to="/">
             IMMERSE
@@ -102,15 +101,16 @@ export default class MainNavbar extends Component {
           )}
         </div>
         <div>
-        {api.isLoggedIn() && (
-          <Media>
-        <Media href="/Profile">
-          <Media object src={{}}  alt="Generic placeholder image" />
-        </Media>
-        </Media>)}
-        <span id="openNavbar" onClick={e => this.openNav(e)}>
-          MENU
-        </span>
+          {api.isLoggedIn() && (
+            <Media>
+              <Media href="/Profile">
+                <Media object src={{}} alt="Generic placeholder image" />
+              </Media>
+            </Media>
+          )}
+          <span id="openNavbar" onClick={e => this.openNav(e)}>
+            MENU
+          </span>
         </div>
         {/* <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page --> */}
         <div id="main" />
