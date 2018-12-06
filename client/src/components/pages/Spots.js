@@ -8,7 +8,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
+  Button,
+  CustomInput
 } from "reactstrap";
 import SpotDetail from "./SpotDetail";
 import api from "../../api";
@@ -35,18 +36,24 @@ class Spots extends Component {
       redMarkers: [],
       newMarker: [],
       pop: undefined,
+      originalArray: [],
 
       city: "",
       temperature: "",
       weatherIcon: "",
-      cityID: ""
+      cityID: "",
+      spotType: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
     this.markers = [];
     this.layer = null;
     // this.newMarker;
+    this.handleOptionChange = this.handleOptionChange.bind(this);
+    // this.handleSurfOption = this.handleSurfOption.bind(this);
+    // this.handleOption = this.handleOption.bind(this);
   }
+
   initMap() {
     // Embed the map where "this.mapRef" is defined in the render
     this.map = new mapboxgl.Map({
@@ -168,12 +175,159 @@ class Spots extends Component {
     console.log("hello");
   };
 
+  setStateBack() {
+    this.setState({
+      spots: this.state.originalArray
+    });
+  }
+
+  handleOptionChange(spots) {
+    // this.setStateBack();
+    // // console.log("spots", this.state.spot.div);
+    this.setState({
+      spotType: spots.target.value
+      //   spots: this.state.spots.filter(item => item.diveSpot)
+    });
+    setTimeout(() => {
+      if (this.state.spotType === "getBothSpots") {
+        this.initMap();
+        this.setState({
+          spots: this.state.originalArray.map(spot => {
+            const [lng, lat] = spot.location.coordinates;
+            const address = spot.address;
+            var varColor;
+
+            if (spot.surfSpot && spot.diveSpot) {
+              varColor = "";
+            } else if (spot.surfSpot) {
+              varColor = "#c7d6d7";
+            } else {
+              varColor = "#155662";
+            }
+
+            return {
+              ...spot,
+
+              marker: new mapboxgl.Marker({
+                color: varColor
+              })
+                .setLngLat([lng, lat])
+                .on("click", () => {
+                  console.log("clicked");
+                })
+                .setPopup(
+                  new mapboxgl.Popup({
+                    offset: 30,
+                    anchor: "center",
+                    type: "line-center"
+                  }).setText(address || spot.title)
+                )
+                .addTo(this.map)
+            };
+          })
+        });
+
+        // console.log("all", this.state.spots);
+      } else if (this.state.spotType === "getDiveSpots") {
+        this.setStateBack();
+        this.initMap();
+        this.setState({
+          spots: this.state.spots
+            .filter(spot => spot.diveSpot)
+            .map(spot => {
+              const [lng, lat] = spot.location.coordinates;
+              const address = spot.address;
+              var varColor = "#155662";
+
+              return {
+                ...spot,
+
+                marker: new mapboxgl.Marker({
+                  color: varColor
+                })
+                  .setLngLat([lng, lat])
+                  .on("click", () => {
+                    console.log("clicked");
+                  })
+                  .setPopup(
+                    new mapboxgl.Popup({
+                      offset: 30,
+                      anchor: "center",
+                      type: "line-center"
+                    }).setText(address || spot.title)
+                  )
+                  .addTo(this.map)
+              };
+            })
+          // console.log("divepots", this.state.spots);
+        });
+      } else {
+        this.setStateBack();
+        this.initMap();
+        this.setState({
+          spots: this.state.spots
+            .filter(item => item.surfSpot)
+            .map(spot => {
+              const [lng, lat] = spot.location.coordinates;
+              const address = spot.address;
+              var varColor = "#c7d6d7";
+
+              return {
+                ...spot,
+
+                marker: new mapboxgl.Marker({
+                  color: varColor
+                })
+                  .setLngLat([lng, lat])
+                  .on("click", () => {
+                    console.log("clicked");
+                  })
+                  .setPopup(
+                    new mapboxgl.Popup({
+                      offset: 30,
+                      anchor: "center",
+                      type: "line-center"
+                    }).setText(address || spot.title)
+                  )
+                  .addTo(this.map)
+              };
+            })
+        });
+        // console.log("surfspots", this.state.spots);
+      }
+    }, 1);
+  }
+
   render() {
-    // console.log("spots", this.state.spots);
     return (
       <div className="spots">
         <Row>
           <Col md={3} className="col-text">
+            <CustomInput
+              type="radio"
+              value="getDiveSpots"
+              name="customRadio"
+              label="Divespots"
+              id="getDiveSpots"
+              onChange={e => this.handleOptionChange(e)}
+            />
+            <CustomInput
+              type="radio"
+              value="getSurfSpots"
+              name="customRadio"
+              label="Surfspots"
+              id="getSurfSpots"
+              onChange={e => this.handleOptionChange(e)}
+            />
+
+            <CustomInput
+              type="radio"
+              value="getBothSpots"
+              name="customRadio"
+              label="All Apots"
+              id="getBothSpots"
+              onChange={e => this.handleOptionChange(e)}
+            />
             {/* new code */}
             <FormGroup row>
               {/* <Label for="searchPlace" xl={3}>
@@ -231,7 +385,7 @@ class Spots extends Component {
             <div className="curWeather">
               {this.state.temperature !== "" && (
                 <div>
-                  Weather: {this.state.temperature}{" "}
+                  Today: {this.state.temperature}{" "}
                   <img
                     src={this.state.weatherIcon}
                     alt=""
@@ -242,16 +396,18 @@ class Spots extends Component {
                     5 day Forecast
                   </Button> */}
                   <hr />
-                  {this.state.temperatureItems.map(item => (
-                    <div key={item.dt_txt}>
-                      <img src={this.getIcon(item)} />
-                      <br />
-                      {this.getCelcius(item)}
-                      <br />
-                      {this.getDay(item)}
-                      {/* <pre>{JSON.stringify(item, null, 2)}</pre> */}
-                    </div>
-                  ))}
+                  <div class="weatherForecast">
+                    {this.state.temperatureItems.map(item => (
+                      <div key={item.dt_txt} class="weatherItems">
+                        <img src={this.getIcon(item)} />
+                        <br />
+                        {this.getCelcius(item)}
+                        <br />
+                        {this.getDay(item)}
+                        {/* <pre>{JSON.stringify(item, null, 2)}</pre> */}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -277,8 +433,18 @@ class Spots extends Component {
     switch (new Date(temperatureItem.dt_txt).getDay()) {
       case 0:
         return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
       case 5:
         return "Friday";
+      case 6:
+        return "Saturday";
       default:
         return "Saturday";
     }
@@ -293,9 +459,19 @@ class Spots extends Component {
             // console.log(spot.address);
             const [lng, lat] = spot.location.coordinates;
             const address = spot.address;
-            let varColor = "green";
+            var varColor;
+
+            if (spot.surfSpot && spot.diveSpot) {
+              varColor = "";
+            } else if (spot.surfSpot) {
+              varColor = "#c7d6d7";
+            } else {
+              varColor = "#155662";
+            }
+
             return {
               ...spot,
+
               marker: new mapboxgl.Marker({
                 color: varColor
               })
@@ -312,8 +488,13 @@ class Spots extends Component {
                 )
                 .addTo(this.map)
             };
-          })
+          }),
+          originalArray: spots
         });
+        // console.log("Spotsarray", this.state.spots);
+        setTimeout(() => {
+          console.log("originalArray", this.state.originalArray);
+        }, 20);
       })
       .catch(err => console.log(err));
     this.initMap();
