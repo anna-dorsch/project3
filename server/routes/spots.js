@@ -23,8 +23,7 @@ router.get("/", (req, res, next) => {
 
 router.post("/", isLoggedIn, (req, res, next) => {
   let {
-    surfSpot,
-    diveSpot,
+    selectedOption,
     title,
     description,
     rating,
@@ -35,12 +34,11 @@ router.post("/", isLoggedIn, (req, res, next) => {
     pictureUrl
   } = req.body;
   let _owner = req.user._id;
-  if (!description || !rating || !lng || !lat || (!diveSpot && !surfSpot)) {
+  if (!description || !rating || !lng || !lat || !selectedOption) {
     return next(new Error("You have to send: description, rating, lng, lat"));
   }
   Spot.create({
-    surfSpot,
-    diveSpot,
+    selectedOption,
     title,
     description,
     rating,

@@ -3,8 +3,6 @@ const Schema = mongoose.Schema;
 
 const spotSchema = new Schema(
   {
-    surfSpot: { type: Boolean, required: true, default: false },
-    diveSpot: { type: Boolean, required: true, default: false },
     title: { type: String },
     pictures: [String],
     pictureUrl: String,
@@ -18,7 +16,8 @@ const spotSchema = new Schema(
     },
     _owner: { type: Schema.Types.ObjectId, ref: "User" },
     // pictureUrl: String,
-    public_id: String
+    public_id: String,
+    selectedOption: {type:String, required:true}
   },
   {
     timestamps: {

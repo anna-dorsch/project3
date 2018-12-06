@@ -38,6 +38,36 @@ router.put('/profile', isLoggedIn, (req,res,next) => {
   })
 })
 
+
+router.put('/users/profile', isLoggedIn, (req,res,next) => {
+  console.log('made it to the backend edit',req.body)
+  let updates = {
+    username: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    selectedOption: req.body.selectedOption
+    // pictureUrl: req.body.pictureUrl, // done by "POST /api/users/pictures"
+  }
+  // If the user sends "newPassword" and "currentPassword", check if the "req.body.currentPassword" is correct and sets the new password with "req.body.newPassword"
+  if (req.body.newPassword && req.body.currentPassword && req.body.newPassword !== "") {
+    // bcrypt.compareSync compares a clear password with a hass password
+    if (!bcrypt.compareSync(req.body.currentPassword, req.user.password)) {
+      // create an error object to send to our error handler with "next()"
+      next(new Error("Current password is wrong"))
+      return
+    }
+    const salt = bcrypt.genSaltSync(bcryptSalt)
+    const hashPass = bcrypt.hashSync(req.body.password, salt)
+    updates.password = hashPass
+  }
+  User.findByIdAndUpdate(req.body.id, updates)
+  .then(user => {
+    res.json({
+      success: true
+    })
+  })
+})
+
 router.delete('/users/:id', isLoggedIn, (req, res, next) => {
   console.log("DEBUG userDoc", req.params.id)
   let id = req.params.id

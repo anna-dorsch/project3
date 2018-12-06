@@ -1,7 +1,7 @@
 // import React from 'react';
 import React from "react";
 // import { NavLink, Route, Switch } from "react-router-dom";
-import { Button, Col, FormGroup, Row, Input, Form, Label } from "reactstrap";
+import { CustomInput,Button, Col, FormGroup, Row, Input, Form, Label } from "reactstrap";
 import api from "../../api";
 // import axios from "axios";
 
@@ -16,8 +16,10 @@ class Profile extends React.Component {
       file: null,
       message: null,
       selectedOption: "",
-      id: null
+      id: null,
+      formVisible:false
     };
+    this.handleOptionChange=this.handleOptionChange.bind(this)
   }
 
  componentDidMount() {
@@ -69,16 +71,120 @@ class Profile extends React.Component {
       });
     });
   }
+  handleInputChange(stateFieldName, event) {
+    this.setState({
+      [stateFieldName]: event.target.value,
+   });
+  }
+  handleEditSubmit(e){
+        let body = {
+          username: this.state.username,
+          password: this.state.password,
+          email: this.state.email,
+          selectedOption: this.state.selectedOption,
+          id: this.state.id
+          
+      }
+      if (this.state.newPassword && this.state.newPassword.length > 0) {
+        body.currentPassword = this.state.currentPassword
+        body.newPassword = this.state.newPassword
+      }
+      api.editProfile(body)
+        .then(data => {
+          // Add a message for 3 seconds
+          this.setState({
+            formVisible:false,
+            message: "Your profile was updated"
+          })
+          setTimeout(() => {
+            this.setState({
+              message: null
+            })
+          }, 3000)
+        })
+      }
+    handleEdit(e){
+      this.setState({
+        formVisible:!this.state.formVisible,
+        username: this.state.username,
+        password: this.state.password,
+        email: this.state.email,
+      })
+    }
+    handleOptionChange(changeEvent) {
+      this.setState({
+        selectedOption: changeEvent.target.value
+      });
+    }
   render() {
-    return (
-      <div className="container">
+    if(this.state.formVisible){
+      return(
+        <Form className="formContainer">
+        <FormGroup row>
+          <Label for="exampleText" hidden>
+          </Label>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+          <h2>Signup</h2>
+            <Input
+              type="text"
+              value={this.state.username}
+              onChange={e => this.handleInputChange("username", e)}
+              name="username"
+              id="exampleUsername"
+              placeholder="Your Username"
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="examplePassword" hidden>
+            
+          </Label>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+            <Input
+              type="password"
+              value={this.state.password}
+              onChange={e => this.handleInputChange("password", e)}
+              name="password"
+              id="examplePassword"
+              placeholder="Your Password"
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup row>
+          <Label for="exampleEmail" hidden>
+          </Label>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+            <Input type="email" value={this.state.email} onChange={e => this.handleInputChange("email", e)}
+              name="email" id="exampleEmail" placeholder="Your email"/>
+             <FormGroup>
+        <div className="radio">
+        <Label for="exampleCheckbox">Your Passion:</Label>
+          <CustomInput type="radio" id="exampleCustomRadio" value="Dive" name="customRadio" label="Dive" onChange={(e) => this.handleOptionChange(e)} />
+          <CustomInput type="radio" id="exampleCustomRadio2" value="Surf" name="customRadio" label="Surf" onChange={(e) => this.handleOptionChange(e)} />
+          <CustomInput type="radio" id="exampleCustomRadio3" value="Dive&Surf" name="customRadio" label="Dive&Surf" onChange={(e) => this.handleOptionChange(e)} />
+        </div>
+      </FormGroup>
+          <Button size="sm" outline color="info" onClick={e => this.handleEditSubmit(e)}>Save Changes</Button>
+           </Col>
+        </FormGroup>
+        {this.state.message && (
+          <div className="info info-danger">{this.state.message}</div>
+        )}
+      </Form>
+
+      )
+    }
+    else{
+
+      return (
+        <div className="container">
     <Col sm={5} className="col-text">
       {this.state.URL !== "" && (
         <img src={this.state.URL} style={{ height: 150 }} />
-      )}
+        )}
       {this.state.message && (
         <div className="info">{this.state.message}</div>
-      )}
+        )}
     </Col>
         <Col sm={5} className="col-text">
           <Form>
@@ -103,7 +209,7 @@ class Profile extends React.Component {
                 size="sm"
                 outline
                 color="info"
-                onClick={e => this.handleClick(e)}
+                onClick={e => this.handleEdit(e)}
                 >
                 Edit
               </Button>
@@ -117,6 +223,7 @@ class Profile extends React.Component {
         </Col>
       </div>
     );
+  }
   }
 }
 

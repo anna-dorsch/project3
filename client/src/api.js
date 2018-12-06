@@ -100,6 +100,7 @@ export default {
       .then(res => res.data)
       .catch(errHandler);
   },
+  
   editProfile(body) {
     return service
       .put("/users/profile", body)

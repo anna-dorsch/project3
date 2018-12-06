@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   Button,
   Col,
+  CustomInput,
   Container,
   Form,
   FormGroup,
@@ -11,6 +12,7 @@ import {
   Row
 } from "reactstrap";
 import api from "../../api";
+
 
 import mapboxgl from "mapbox-gl/dist/mapbox-gl";
 import Autocomplete from "./Autocomplete";
@@ -28,8 +30,6 @@ class AddSpot extends Component {
     super(props);
 
     this.state = {
-      diveSpot: false,
-      surfSpot: false,
       title: "",
       description: "",
       rating: 0,
@@ -39,13 +39,15 @@ class AddSpot extends Component {
       searchResults: [],
       address: "",
       pictureUrl: "",
-      file: null
+      file: null,
+      selectedOption:""
     };
     this.mapRef = React.createRef();
     this.map = null;
     this.marker = null;
+    this.handleOptionChange=this.handleOptionChange.bind(this)
   }
-
+  
   handleInputChange = event => {
     let name = event.target.name;
     const value =
@@ -81,7 +83,8 @@ class AddSpot extends Component {
       lng: this.state.lng,
       lat: this.state.lat,
       address: this.state.searchText,
-      pictureUrl: this.state.pictureUrl
+      pictureUrl: this.state.pictureUrl,
+      selectedOption: this.state.selectedOption
     };
 
     api
@@ -102,8 +105,6 @@ class AddSpot extends Component {
           description: "",
           rating: 0,
           address: "",
-          diveSpot: false,
-          surfSpot: false,
           searchText: "",
           pictureUrl: "",
 
@@ -228,8 +229,12 @@ class AddSpot extends Component {
           });
           console.log("this is the url", this.state.pictureUrl);
         });
-      }
-    );
+      });
+  }
+  handleOptionChange(changeEvent) {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
   }
 
   render() {
@@ -241,28 +246,15 @@ class AddSpot extends Component {
           <Col md={6}>
             <Form>
               {/* checking whether it is a dive or a surfspot */}
-              <FormGroup check inline>
+              {/* <FormGroup> */}
+              <Col sm={1}>
                 <Label check for="type">
-                  <Input
-                    name="surfSpot"
-                    type="checkbox"
-                    value={this.state.surfSpot}
-                    onChange={this.handleInputChange}
-                  />
-                  Surfspot
+                  <CustomInput type="radio" id="exampleCustomRadio" value="Divespot" name="customRadio" label="Divespot" onChange={(e) => this.handleOptionChange(e)} />
+                  <CustomInput type="radio" id="exampleCustomRadio2" value="Surfpot" name="customRadio" label="Surfspot" onChange={(e) => this.handleOptionChange(e)} />
+                  <CustomInput type="radio" id="exampleCustomRadio3" value="Divespot&Surfspot" name="customRadio" label="Divespot&Surfspot" onChange={(e) => this.handleOptionChange(e)} />
                 </Label>
-              </FormGroup>
-              <FormGroup check inline>
-                <Label check for="type">
-                  <Input
-                    name="diveSpot"
-                    type="checkbox"
-                    value={this.state.diveSpot}
-                    onChange={this.handleInputChange}
-                  />
-                  Divespot
-                </Label>
-              </FormGroup>
+                </Col>
+              {/* </FormGroup> */}
 
               {/* the user can give the place a personal Name */}
               <FormGroup row>
