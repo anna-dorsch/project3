@@ -6361,7 +6361,7 @@ body {
   font-size: 1.2em; }
 
 .Home {
-  background-image: url("/noSky3.png");
+  background-image: url("/noSky2.png");
   background-size: cover;
   background-repeat: no-repeat;
   height: 700px;
@@ -6377,20 +6377,23 @@ body {
   color: rgba(255, 255, 255, 0.7);
   background-color: transparent;
   padding: 50px;
-  border: 5px solid rgba(255, 255, 255, 0.5);
   font-size: 40px;
   text-align: center; }
 
 .diveButton {
   margin-top: 125px;
-  border-radius: 15px; }
+  border-radius: 15px;
+  border: 5px solid rgba(255, 255, 255, 0.5); }
 
 .surfButton {
   margin-top: 80px;
-  border-radius: 15px; }
+  border-radius: 15px;
+  border: 5px solid rgba(21, 86, 98, 0.5);
+  color: rgba(21, 86, 98, 0.5); }
 
 .surfButton:hover {
-  color: #c7d6d7; }
+  color: #c7d6d7;
+  background-color: #155662; }
 
 .diveButton:hover {
   color: #155662; }
