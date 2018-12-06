@@ -325,10 +325,17 @@ body {
 .weatherForecast {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
 }
 
 .weatherItems {
-  width: 92px;
+  width: 80px;
+  margin: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  text-align: center;
+  color: rgb(21, 86, 98);
 }
 
 body {
@@ -337,4 +344,12 @@ body {
   background-repeat: no-repeat;
   height: 700px;
   background-position-y: 50%;
+}
+
+hr {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.Weather {
+  color: rgba(255, 255, 255, 0.7);
 }

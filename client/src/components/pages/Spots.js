@@ -394,7 +394,7 @@ class Spots extends Component {
 
             <div className="curWeather">
               {this.state.temperature !== "" && (
-                <div>
+                <div class="Weather">
                   Today: {this.state.temperature}{" "}
                   <img
                     src={this.state.weatherIcon}
