@@ -63,7 +63,7 @@ class Spots extends Component {
       container: this.mapRef.current,
       style: "mapbox://styles/mapbox/streets-v10",
       center: [this.state.lng, this.state.lat], // Africa lng,lat
-      zoom: 1
+      zoom: 3
     });
     // Add zoom control on the top right corner
     this.map.addControl(new mapboxgl.NavigationControl());
@@ -309,8 +309,8 @@ class Spots extends Component {
     console.log("state porps", this.state.surfCheck);
     return (
       <div className="spots">
-        <Row>
-          <Col md={3} className="col-text">
+        <Row className="spotsRow">
+          <Col md={2} className="col-text">
             <CustomInput
               type="radio"
               value="getDiveSpots"
@@ -378,18 +378,8 @@ class Spots extends Component {
               </ListGroup>
             </div>
           </Col>
-          <Col sm={3} className="col-text">
-            <Switch>
-              <Route
-                path="/spots/:id"
-                render={props => (
-                  <SpotDetail spots={this.state.spots} {...props} />
-                )}
-              />
-              <Route render={() => <h2>Select a spot</h2>} />
-            </Switch>
-          </Col>
-          <Col sm={5}>
+
+          <Col sm={6}>
             <div ref={this.mapRef} className="map" style={{ height: 400 }} />
 
             <div className="curWeather">
@@ -421,6 +411,17 @@ class Spots extends Component {
                 </div>
               )}
             </div>
+          </Col>
+          <Col sm={4} className="col-text">
+            <Switch>
+              <Route
+                path="/spots/:id"
+                render={props => (
+                  <SpotDetail spots={this.state.spots} {...props} />
+                )}
+              />
+              <Route render={() => <h2>Select a spot</h2>} />
+            </Switch>
           </Col>
         </Row>
       </div>

@@ -6,10 +6,8 @@ import api from "../api";
 import { Media } from "reactstrap";
 import Profile from "./pages/Profile";
 
-
-
 var imgStyle = {
-  minWidth: "128px",
+  minWidth: "128px"
 };
 export default class MainNavbar extends Component {
   constructor(props) {
@@ -17,7 +15,7 @@ export default class MainNavbar extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      URL: Profile.URL,
+      URL: Profile.URL
     };
   }
   handleLogoutClick(e) {
