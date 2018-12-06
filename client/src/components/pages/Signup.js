@@ -73,9 +73,11 @@ class Signup extends Component {
       // <div className="formContainer">
       <Form className="formContainer">
         <FormGroup row>
+          <Col sm="3" md={{ size: 2, offset: 4 }}>
+            <h2>Signup</h2></Col></FormGroup>
+          <FormGroup row>
+          <Col sm="4" md={{ size: 3, offset: 4 }}>
           <Label for="exampleText" hidden />
-          <Col sm="4" md={{ size: 3, offset: 3 }}>
-            <h2>Signup</h2>
             <Input
               type="text"
               value={this.state.username}
@@ -88,7 +90,7 @@ class Signup extends Component {
         </FormGroup>
         <FormGroup row>
           <Label for="examplePassword" hidden />
-          <Col sm="4" md={{ size: 3, offset: 3 }}>
+          <Col sm="4" md={{ size: 3, offset: 4 }}>
             <Input
               type="password"
               value={this.state.password}
@@ -101,7 +103,7 @@ class Signup extends Component {
         </FormGroup>
         <FormGroup row>
           <Label for="exampleEmail" hidden />
-          <Col sm="4" md={{ size: 3, offset: 3 }}>
+          <Col sm="4" md={{ size: 3, offset: 4 }}>
             <Input
               type="email"
               value={this.state.email}
@@ -110,7 +112,7 @@ class Signup extends Component {
               id="exampleEmail"
               placeholder="Your email"
             />
-            <FormGroup>
+            <FormGroup Row>
               <div className="radio">
                 <Label for="exampleCheckbox">Your Passion:</Label>
                 <CustomInput

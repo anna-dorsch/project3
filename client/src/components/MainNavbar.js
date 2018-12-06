@@ -4,14 +4,20 @@ import { NavLink as NLink, Link } from "react-router-dom"; // Be careful, NavLin
 // import logo from "../logo.svg";
 import api from "../api";
 import { Media } from "reactstrap";
-import { Profile } from "./pages/Profile";
+import Profile from "./pages/Profile";
 
+
+
+var imgStyle = {
+  minWidth: "128px",
+};
 export default class MainNavbar extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      URL: Profile.URL,
     };
   }
   handleLogoutClick(e) {
@@ -104,7 +110,7 @@ export default class MainNavbar extends Component {
           {api.isLoggedIn() && (
             <Media>
               <Media href="/Profile">
-                <Media object src={{}} alt="Generic placeholder image" />
+                <Media style={imgStyle} object src={this.state.URL} alt="Generic placeholder image" />
               </Media>
             </Media>
           )}

@@ -6505,7 +6505,7 @@ body {
   color: #177e89; }
 
 .getHome {
-  position: relative;
+  position: absolute;
   margin-left: 10px;
   color: rgba(255, 255, 255, 0.7);
   padding-top: 5px;
@@ -6539,3 +6539,7 @@ body {
 
 .weatherItems {
   width: 92px; }
+
+.formContainer {
+  padding-top: 250px;
+  padding-left: 150px; }

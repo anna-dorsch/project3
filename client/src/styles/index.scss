@@ -267,7 +267,7 @@ body {
 }
 
 .getHome {
-  position: relative;
+  position: absolute;
 
   // left: 25px;
   // font-size: 36px;
@@ -323,3 +323,18 @@ body {
 .weatherItems {
   width: 92px;
 }
+
+.formContainer {
+  padding-top: 250px;
+  padding-left: 150px;
+}
+// .formContainer2 {
+//   padding-top: 250px;
+//   padding-left: 250px;
+// }
+
+// h2 {
+//   padding: 10px;
+  
+// }
+

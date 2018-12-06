@@ -32,24 +32,31 @@ class Login extends Component {
     return (
       <div className="formContainer">
         <Form>
-        <h2>Login</h2>
         <FormGroup row>
+        <Col sm="4" md={{ size: 3, offset: 4 }}>
+        <h2>Login</h2>
+        </Col></FormGroup>
+        <FormGroup row>
+          <Col sm="4" md={{ size: 3, offset: 4 }}>
           <Label for="exampleText" hidden> </Label>
-          <Col sm={3}>
             <Input type="text" value= {this.state.username} onChange={(e) => this.handleInputChange("username", e)}name="username" id="exampleUsername" placeholder="Username" />
           </Col>
         </FormGroup>
         <FormGroup row>
           <Label for="examplePassword" hidden></Label>
-          <Col sm={3}>
-            <Input type="password"  value= {this.state.password} onChange={(e) => this.handleInputChange("password", e)} name="password" id="examplePassword" placeholder="Password" />
+          <Col sm="4" md={{ size: 3, offset: 4 }}>
+          <Input type="password"  value= {this.state.password} onChange={(e) => this.handleInputChange("password", e)} name="password" id="examplePassword" placeholder="Password" />
           </Col>
         </FormGroup>
+        <FormGroup row>
+        <Col id="butt" sm={{ size: 'auto', offset: 4 }}>
         <Button size="sm" outline color="primary" onClick={(e) => this.handleClick(e)}>Login</Button>
-        </Form>
+       </Col>
+       </FormGroup>
         {this.state.message && <div className="info info-danger">
           {this.state.message}
         </div>}
+        </Form>
       </div>
     );
   }
