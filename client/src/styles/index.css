@@ -6361,7 +6361,7 @@ body {
   font-size: 1.2em; }
 
 .Home {
-  background-image: url("/noSky3.png");
+  background-image: url("/noSky2.png");
   background-size: cover;
   background-repeat: no-repeat;
   height: 700px;
@@ -6377,27 +6377,29 @@ body {
   color: rgba(255, 255, 255, 0.7);
   background-color: transparent;
   padding: 50px;
-  border: 5px solid rgba(255, 255, 255, 0.5);
   font-size: 40px;
   text-align: center; }
 
 .diveButton {
   margin-top: 125px;
-  border-radius: 15px; }
+  border-radius: 15px;
+  border: 5px solid rgba(255, 255, 255, 0.5); }
 
 .surfButton {
   margin-top: 80px;
-  border-radius: 15px; }
+  border-radius: 15px;
+  border: 5px solid rgba(21, 86, 98, 0.5);
+  color: rgba(21, 86, 98, 0.5); }
 
 .surfButton:hover {
-  color: #c7d6d7; }
+  color: #c7d6d7;
+  background-color: #155662; }
 
 .diveButton:hover {
-  color: #155662; }
+  color: #155662;
+  background-color: rgba(255, 255, 255, 0.7); }
 
 .buttons:hover {
-  color: rgbargba(0, 0, 0, 0.5);
-  background-color: rgba(255, 255, 255, 0.7);
   border: 5px solid rgba(255, 255, 255, 0);
   text-decoration: none; }
 
@@ -6463,7 +6465,7 @@ body {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #155662;
   display: block;
   transition: 0.3s; }
 
@@ -6472,7 +6474,7 @@ body {
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-  color: #177e89; }
+  color: white; }
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {
@@ -6498,18 +6500,20 @@ body {
   position: absolute;
   right: 25px;
   margin-left: 50px;
-  color: rgba(255, 255, 255, 0.7);
+  color: #155662;
   font-size: 20px; }
 
-#openNavbar :hover {
-  color: #177e89; }
+#openNavbar:hover {
+  color: white; }
 
 .getHome {
   position: absolute;
   margin-left: 10px;
-  color: rgba(255, 255, 255, 0.7);
-  padding-top: 5px;
+  color: #155662;
   font-size: 20px; }
+
+.getHome:hover {
+  color: white; }
 
 #more {
   display: none; }
@@ -6543,3 +6547,9 @@ body {
 .formContainer {
   padding-top: 250px;
   padding-left: 150px; }
+body {
+  background-image: url("/BACKGROUND6.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 700px;
+  background-position-y: 50%; }

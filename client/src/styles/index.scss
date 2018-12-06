@@ -84,7 +84,7 @@ body {
 }
 
 .Home {
-  background-image: url("/noSky3.png");
+  background-image: url("/noSky2.png");
   background-size: cover;
   background-repeat: no-repeat;
   height: 700px;
@@ -103,7 +103,6 @@ body {
   color: rgba(255, 255, 255, 0.7);
   background-color: transparent;
   padding: 50px;
-  border: 5px solid rgba(255, 255, 255, 0.5);
   font-size: 40px;
   text-align: center;
 }
@@ -111,25 +110,29 @@ body {
 .diveButton {
   margin-top: 125px;
   border-radius: 15px;
+  border: 5px solid rgba(255, 255, 255, 0.5);
 }
 
 .surfButton {
   margin-top: 80px;
   border-radius: 15px;
+  border: 5px solid rgba(21, 86, 98, 0.5);
+  color: rgba(21, 86, 98, 0.5);
 }
 
 .surfButton:hover {
   color: #c7d6d7;
+  background-color: rgb(21, 86, 98);
 }
 
 .diveButton:hover {
   color: #155662;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .buttons:hover {
   // padding: 52px;
-  color: rgbargba(0, 0, 0, 0.5);
-  background-color: rgba(255, 255, 255, 0.7);
+  // color: rgba(0, 0, 0, 0.5);
   border: 5px solid rgba(255, 255, 255, 0);
   text-decoration: none;
 }
@@ -213,7 +216,7 @@ body {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: rgb(21, 86, 98);
   display: block;
   transition: 0.3s;
 }
@@ -223,7 +226,7 @@ body {
 }
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-  color: $primary;
+  color: rgba(255, 255, 255, 1);
 }
 
 /* Position and style the close button (top right corner) */
@@ -257,13 +260,13 @@ body {
   right: 25px;
   // font-size: 36px;
   margin-left: 50px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgb(21, 86, 98);
   // padding-top: 25px;
   font-size: 20px;
 }
 
-#openNavbar :hover {
-  color: $primary;
+#openNavbar:hover {
+  color: white;
 }
 
 .getHome {
@@ -273,9 +276,13 @@ body {
   // font-size: 36px;
   margin-left: 10px;
   // margin-bottom: 100px;
-  color: rgba(255, 255, 255, 0.7);
-  padding-top: 5px;
+  color: rgb(21, 86, 98);
+  // padding-top: 5px;
   font-size: 20px;
+}
+
+.getHome:hover {
+  color: white;
 }
 
 #more {
@@ -338,3 +345,10 @@ body {
   
 // }
 
+body {
+  background-image: url("/BACKGROUND6.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 700px;
+  background-position-y: 50%;
+}

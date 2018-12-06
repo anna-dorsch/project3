@@ -40,8 +40,7 @@ export default class MainNavbar extends Component {
   closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
-    document.getElementById("openNavbar").style.color =
-      "rgba(255, 255, 255, 0.7)";
+    document.getElementById("openNavbar").style.color = "rgb(21, 86, 98)";
   }
 
   render() {
@@ -107,13 +106,13 @@ export default class MainNavbar extends Component {
           )}
         </div>
         <div>
-          {api.isLoggedIn() && (
-            <Media>
-              <Media href="/Profile">
-                <Media style={imgStyle} object src={this.state.URL} alt="Generic placeholder image" />
-              </Media>
-            </Media>
-          )}
+          {/* {api.isLoggedIn() && (
+            // <Media>
+            //   <Media href="/Profile">
+            //     <Media object src={{}} alt="Generic placeholder image" />
+            //   </Media>
+            // </Media>
+          )} */}
           <span id="openNavbar" onClick={e => this.openNav(e)}>
             MENU
           </span>

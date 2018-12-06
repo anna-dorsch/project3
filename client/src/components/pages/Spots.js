@@ -42,7 +42,10 @@ class Spots extends Component {
       temperature: "",
       weatherIcon: "",
       cityID: "",
-      spotType: ""
+      spotType: "",
+
+      surfCheck: "",
+      diveCheck: ""
     };
     this.mapRef = React.createRef();
     this.map = null;
@@ -185,14 +188,15 @@ class Spots extends Component {
     // this.setStateBack();
     // // console.log("spots", this.state.spot.div);
     this.setState({
-      spotType: spots.target.value
+      spotType: spots.target.value,
+      diveCheck: !this.state.diveCheck
       //   spots: this.state.spots.filter(item => item.diveSpot)
     });
     setTimeout(() => {
       if (this.state.spotType === "getBothSpots") {
         this.initMap();
         this.setState({
-          spots: this.state.originalArray.map(spot => {
+          spots: this.state.originalArray.sort().map(spot => {
             const [lng, lat] = spot.location.coordinates;
             const address = spot.address;
             var varColor;
@@ -234,6 +238,7 @@ class Spots extends Component {
         this.setState({
           spots: this.state.spots
             .filter(spot => spot.diveSpot)
+            .sort()
             .map(spot => {
               const [lng, lat] = spot.location.coordinates;
               const address = spot.address;
@@ -267,6 +272,7 @@ class Spots extends Component {
         this.setState({
           spots: this.state.spots
             .filter(item => item.surfSpot)
+            .sort()
             .map(spot => {
               const [lng, lat] = spot.location.coordinates;
               const address = spot.address;
@@ -299,6 +305,8 @@ class Spots extends Component {
   }
 
   render() {
+    console.log(this.props.location.query);
+    console.log("state porps", this.state.surfCheck);
     return (
       <div className="spots">
         <Row>
@@ -309,7 +317,9 @@ class Spots extends Component {
               name="customRadio"
               label="Divespots"
               id="getDiveSpots"
+              checked={this.state.diveCheck}
               onChange={e => this.handleOptionChange(e)}
+              s
             />
             <CustomInput
               type="radio"
@@ -354,7 +364,7 @@ class Spots extends Component {
                 <h3 className="panel-title">The Best Spots</h3>
               </div>
               <ListGroup>
-                {this.state.spots.map((h, i) => (
+                {this.state.spots.sort().map((h, i) => (
                   <ListGroupItem
                     key={h._id}
                     action
@@ -455,7 +465,46 @@ class Spots extends Component {
       .getSpots()
       .then(spots => {
         this.setState({
-          spots: spots.map(spot => {
+          diveCheck: this.props.location.query,
+          originalArray: spots
+        });
+        console.log("checkes?", this.state.diveCheck);
+        if (this.state.diveCheck === "checked") {
+          this.setStateBack();
+          this.initMap();
+          this.setState({
+            spots: this.state.spots
+              .filter(spot => spot.diveSpot)
+              .sort()
+              .map(spot => {
+                const [lng, lat] = spot.location.coordinates;
+                const address = spot.address;
+                var varColor = "#155662";
+
+                return {
+                  ...spot,
+
+                  marker: new mapboxgl.Marker({
+                    color: varColor
+                  })
+                    .setLngLat([lng, lat])
+                    .on("click", () => {
+                      console.log("clicked");
+                    })
+                    .setPopup(
+                      new mapboxgl.Popup({
+                        offset: 30,
+                        anchor: "center",
+                        type: "line-center"
+                      }).setText(address || spot.title)
+                    )
+                    .addTo(this.map)
+                };
+              })
+            // console.log("divepots", this.state.spots);
+          });
+        } else {
+          spots: spots.sort().map(spot => {
             // console.log(spot.address);
             const [lng, lat] = spot.location.coordinates;
             const address = spot.address;
@@ -488,9 +537,9 @@ class Spots extends Component {
                 )
                 .addTo(this.map)
             };
-          }),
-          originalArray: spots
-        });
+          });
+        }
+
         // console.log("Spotsarray", this.state.spots);
         setTimeout(() => {
           console.log("originalArray", this.state.originalArray);

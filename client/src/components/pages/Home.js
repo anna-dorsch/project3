@@ -18,14 +18,6 @@ class Home extends Component {
     this.state = {};
   }
 
-  openSurfSpots = e => {
-    console.log("opensurfSpot");
-  };
-
-  openDiveSpots = e => {
-    console.log("openDiveSpot");
-  };
-
   render() {
     return (
       <div className="Home">
@@ -40,15 +32,19 @@ class Home extends Component {
             <button class="buttons diveButton">DIVE</button> */}
 
             <Link
-              to="/spots"
-              onClick={e => this.openSurfSpots(e)}
+              to={{
+                pathname: "/spots"
+              }}
+              params={{ testvalue: "hello" }}
               class="buttons surfButton"
             >
               SURF
             </Link>
             <Link
-              to="/spots"
-              onClick={e => this.openDiveSpots(e)}
+              to={{
+                pathname: "/spots",
+                query: "checked"
+              }}
               class="buttons diveButton"
             >
               DIVE
