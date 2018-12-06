@@ -298,3 +298,12 @@ body {
 .navbar {
   background-image: url("/background.png");
 }
+
+.weatherForecast {
+  display: flex;
+  flex-direction: row;
+}
+
+.weatherItems {
+  width: 92px;
+}
