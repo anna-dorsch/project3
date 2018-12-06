@@ -45,7 +45,7 @@ class Login extends Component {
             <Input type="password"  value= {this.state.password} onChange={(e) => this.handleInputChange("password", e)} name="password" id="examplePassword" placeholder="Password" />
           </Col>
         </FormGroup>
-        <Button size="sm" outline color="info" onClick={(e) => this.handleClick(e)}>Login</Button>
+        <Button size="sm" outline color="primary" onClick={(e) => this.handleClick(e)}>Login</Button>
         </Form>
         {this.state.message && <div className="info info-danger">
           {this.state.message}
