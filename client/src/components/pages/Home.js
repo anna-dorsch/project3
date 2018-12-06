@@ -9,6 +9,7 @@ import {
   Label,
   Row
 } from "reactstrap";
+import { NavLink as NLink, Link } from "react-router-dom";
 // import api from '../../api';
 
 class Home extends Component {
@@ -30,18 +31,28 @@ class Home extends Component {
       <div className="Home">
         <div class="homeBackground">
           <div class="buttonWrapper">
-            <button
+            {/* <button
               class="buttons surfButton"
               onClick={e => this.openSurfSpots(e)}
             >
               SURF
             </button>
-            <button
-              class="buttons diveButton"
+            <button class="buttons diveButton">DIVE</button> */}
+
+            <Link
+              to="/spots"
+              onClick={e => this.openSurfSpots(e)}
+              class="buttons surfButton"
+            >
+              SURF
+            </Link>
+            <Link
+              to="/spots"
               onClick={e => this.openDiveSpots(e)}
+              class="buttons diveButton"
             >
               DIVE
-            </button>
+            </Link>
           </div>
         </div>
       </div>

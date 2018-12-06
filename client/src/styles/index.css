@@ -6361,7 +6361,7 @@ body {
   font-size: 1.2em; }
 
 .Home {
-  background-image: url("/noSky2.png");
+  background-image: url("/noSky3.png");
   background-size: cover;
   background-repeat: no-repeat;
   height: 700px;
@@ -6378,7 +6378,8 @@ body {
   background-color: transparent;
   padding: 50px;
   border: 5px solid rgba(255, 255, 255, 0.5);
-  font-size: 40px; }
+  font-size: 40px;
+  text-align: center; }
 
 .diveButton {
   margin-top: 125px;
@@ -6388,11 +6389,17 @@ body {
   margin-top: 80px;
   border-radius: 15px; }
 
+.surfButton:hover {
+  color: #c7d6d7; }
+
+.diveButton:hover {
+  color: #155662; }
+
 .buttons:hover {
-  padding: 52px;
   color: rgbargba(0, 0, 0, 0.5);
   background-color: rgba(255, 255, 255, 0.7);
-  border: 5px solid rgba(255, 255, 255, 0); }
+  border: 5px solid rgba(255, 255, 255, 0);
+  text-decoration: none; }
 
 .Spots {
   margin-top: -20px; }
@@ -6492,7 +6499,6 @@ body {
   right: 25px;
   margin-left: 50px;
   color: rgba(255, 255, 255, 0.7);
-  padding-top: 25px;
   font-size: 20px; }
 
 #openNavbar :hover {
