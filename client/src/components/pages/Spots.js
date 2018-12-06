@@ -345,6 +345,7 @@ class Spots extends Component {
               </Label> */}
               <Col xl={9}>
                 <Input
+                  className="spotSearch"
                   placeholder="find a spot"
                   type="text"
                   value={this.state.searchPlace}
@@ -361,7 +362,7 @@ class Spots extends Component {
             {/* /new code */}
             <div className="panel panel-primary" id="result_panel">
               <div className="panel-heading">
-                <h3 className="panel-title">The Best Spots</h3>
+                {/* <h3 className="panel-title">The Best Spots</h3> */}
               </div>
               <ListGroup>
                 {this.state.spots.sort().map((h, i) => (

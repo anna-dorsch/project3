@@ -1,6 +1,6 @@
 // --------------------
 // Definition of variables
-$primary: #177e89;
+$primary: rgb(21, 86, 98);
 $marginBottomNavbar: 20px;
 $navbarHeight: 60px;
 
@@ -189,9 +189,10 @@ body {
 .tag {
   border-radius: 10px;
   background-color: $primary;
-  margin: 10px 7px 10px 0px;
-  padding: 5px 10px;
-  color: white;
+  margin: 10px 7px 0px 0px;
+  padding: 2px 7px;
+  color: $primary;
+  background-color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
 }
 
@@ -370,8 +371,46 @@ hr {
 
 .spots {
   margin: 0 auto;
+  margin-top: 25px;
+  margin-left: 20px;
 }
 
 .spotsRow {
   margin: 0 auto;
+}
+
+.tagContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.spotImage {
+  object-fit: contain;
+  width: 300px;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.tagHeadline {
+  margin-right: 10px;
+}
+
+h5 {
+  font-weight: 450;
+  margin: 10px 0 2px 0;
+  font-size: 20px;
+}
+
+.spotDetail {
+  overflow: scroll;
+}
+
+.spotSearch {
+  margin-top: 10px;
+}
+
+.scroll {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
