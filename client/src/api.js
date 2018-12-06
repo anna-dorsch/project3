@@ -71,7 +71,7 @@ export default {
   getProfile(id) {
     return service
       .get("/profile")
-      .then(res =>res.data)
+      .then(res => res.data)
       .catch(errHandler);
   },
 
@@ -96,18 +96,16 @@ export default {
   },
   deleteUser(id) {
     return service
-      .delete('/users/'+id)
+      .delete("/users/" + id)
       .then(res => res.data)
-      .catch(errHandler)
+      .catch(errHandler);
   },
   editProfile(body) {
     return service
-      .put('/users/profile', body)
+      .put("/users/profile", body)
       .then(res => res.data)
-      .catch(errHandler)
+      .catch(errHandler);
   },
-}
-
 
   addSimplePicture(file) {
     const formData = new FormData();
