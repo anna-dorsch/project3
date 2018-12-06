@@ -6512,5 +6512,13 @@ body {
 .curWeather {
   margin-top: 20px; }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center; }
+
+.radio {
+  padding-top: 10px; }
 .navbar {
   background-image: url("/background.png"); }

@@ -68,10 +68,10 @@ export default {
       .catch(errHandler);
   },
 
-  getProfile() {
+  getProfile(id) {
     return service
       .get("/profile")
-      .then(res => res.data)
+      .then(res =>res.data)
       .catch(errHandler);
   },
 
@@ -94,6 +94,20 @@ export default {
       .then(res => res.data)
       .catch(errHandler);
   },
+  deleteUser(id) {
+    return service
+      .delete('/users/'+id)
+      .then(res => res.data)
+      .catch(errHandler)
+  },
+  editProfile(body) {
+    return service
+      .put('/users/profile', body)
+      .then(res => res.data)
+      .catch(errHandler)
+  },
+}
+
 
   addSimplePicture(file) {
     const formData = new FormData();
