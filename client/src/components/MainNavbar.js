@@ -40,7 +40,7 @@ export default class MainNavbar extends Component {
 
   render() {
     return (
-      <Navbar class="navbar">
+      <Navbar className="navbar">
         <NavItem>
           <NavLink className="getHome" tag={NLink} to="/">
             IMMERSE
