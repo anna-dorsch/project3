@@ -15,20 +15,37 @@ class Profile extends React.Component {
       URL: "",
       file: null,
       message: null,
-      selectedOption: ""
+      selectedOption: "",
+      id: null
     };
   }
 
-  componentDidMount() {
+ componentDidMount() {
     api.getProfile().then(user => {
       this.setState({
         username: user.username,
         password: user.password,
         email: user.email,
         URL: user.imageURL,
-        selectedOption: user.selectedOption
+        selectedOption: user.selectedOption,
+        id: user._id
       });
     });
+  }
+  handleDelete(idClicked) {
+    api.deleteUser(idClicked)
+    .then(data => {
+      console.log('Delete', data)
+      api.logout()
+      this.props.history.push("/")
+      // this.setState({
+      //   // The new countries are the ones where their _id are diffrent from idClicked
+      //   // user: this.state.user.filter(c => c._id !== idClicked)
+      // })
+    })
+    .catch(err => {
+      console.log("ERROR", err);
+    })
   }
 
   handleChange(e) {
@@ -55,20 +72,20 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="container">
+    <Col sm={5} className="col-text">
+      {this.state.URL !== "" && (
+        <img src={this.state.URL} style={{ height: 150 }} />
+      )}
+      {this.state.message && (
+        <div className="info">{this.state.message}</div>
+      )}
+    </Col>
         <Col sm={5} className="col-text">
           <Form>
-            <Row>
+            <Row id="hi">
               <h2>hi {this.state.username}</h2>
             </Row>
 
-            <Row>
-              {this.state.URL !== "" && (
-                <img src={this.state.URL} style={{ height: 150 }} />
-              )}
-              {this.state.message && (
-                <div className="info">{this.state.message}</div>
-              )}
-            </Row>
             <Row sm={7}>Username:{this.state.username} </Row>
             <Row sm={7}>Email: {this.state.email} </Row>
             <Row sm={7}> Your passion: {this.state.selectedOption} </Row>
@@ -87,17 +104,14 @@ class Profile extends React.Component {
                 outline
                 color="info"
                 onClick={e => this.handleClick(e)}
-              >
+                >
                 Edit
               </Button>
-              <Button
-                size="sm"
+              {api.isLoggedIn() && <Button size="sm"
                 outline
                 color="info"
-                onClick={e => this.handleClick(e)}
-              >
-                Delete
-              </Button>
+                onClick={() => this.handleDelete(this.state.id)}>Delete</Button>}
+             
             </Row>
           </Form>
         </Col>

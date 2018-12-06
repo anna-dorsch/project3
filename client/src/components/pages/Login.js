@@ -30,22 +30,22 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="Login">
-        <h2>Login</h2>
+      <div className="formContainer">
         <Form>
+        <h2>Login</h2>
         <FormGroup row>
-          <Label for="exampleText" sm={1}>Username </Label>
-          <Col sm={2}>
-            <Input type="text" value= {this.state.username} onChange={(e) => this.handleInputChange("username", e)}name="username" id="exampleUsername" placeholder="crazyDiver666" />
+          <Label for="exampleText" hidden> </Label>
+          <Col sm={3}>
+            <Input type="text" value= {this.state.username} onChange={(e) => this.handleInputChange("username", e)}name="username" id="exampleUsername" placeholder="Username" />
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="examplePassword" sm={1}>Password</Label>
-          <Col sm={2}>
-            <Input type="password"  value= {this.state.password} onChange={(e) => this.handleInputChange("password", e)} name="password" id="examplePassword" placeholder="your secret" />
+          <Label for="examplePassword" hidden></Label>
+          <Col sm={3}>
+            <Input type="password"  value= {this.state.password} onChange={(e) => this.handleInputChange("password", e)} name="password" id="examplePassword" placeholder="Password" />
           </Col>
         </FormGroup>
-        <Button size="sm" outline color="info" onClick={(e) => this.handleClick(e)}>LogIn</Button>
+        <Button size="sm" outline color="info" onClick={(e) => this.handleClick(e)}>Login</Button>
         </Form>
         {this.state.message && <div className="info info-danger">
           {this.state.message}

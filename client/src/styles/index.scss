@@ -235,3 +235,19 @@ body {
   // flex-direction: column;
   margin-top: 20px;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  // margin-top: 12%;
+  align-content: center; 
+}
+
+.formContainer {
+  // display: flex;
+}
+
+.radio{
+  padding-top: 10px;
+}

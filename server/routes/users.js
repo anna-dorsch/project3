@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const { isLoggedIn } = require('../middlewares');
+const { checkId } = require('../middlewares');
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
@@ -8,7 +9,6 @@ const parser = require('../configs/cloudinary.js');
 const cloudinary = require('cloudinary');
 
 router.get('/profile',  (req,res,next) => {
-  
   console.log(req.user)
   res.json(req.user);
 })
@@ -36,6 +36,22 @@ router.put('/profile', isLoggedIn, (req,res,next) => {
       success: true
     })
   })
+})
+
+router.delete('/users/:id', isLoggedIn, (req, res, next) => {
+  console.log("DEBUG userDoc", req.params.id)
+  let id = req.params.id
+  User.findByIdAndDelete(id)
+    .then(userDoc => {
+      req.logout()
+      res.json({
+        // !!myVariable converts truthy to true and falsy to false
+        success: !!userDoc,
+        user: userDoc,
+        // message: "This is just a test!"
+      })
+    })
+    .catch(err => next(err))
 })
 
 router.post('/picture', parser.single('picture'), (req, res, next) => {
