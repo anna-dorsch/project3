@@ -45,7 +45,7 @@ export default class SpotDetail extends Component {
             ) : (
               <div>
                 <h5>Description</h5>
-                <p>{curSpot.description}</p>
+                <p className="description">{curSpot.description}</p>
               </div>
             )}
 
