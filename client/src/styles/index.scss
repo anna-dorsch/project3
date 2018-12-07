@@ -1,6 +1,6 @@
 // --------------------
 // Definition of variables
-$primary: #177e89;
+$primary: rgb(21, 86, 98);
 $marginBottomNavbar: 20px;
 $navbarHeight: 60px;
 
@@ -84,10 +84,10 @@ body {
 }
 
 .Home {
-  background-image: url("/noSky2.png");
+  background-image: url("/noSky.png");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 700px;
+  height: 880px;
   background-position-y: 50%;
   // width: 100;
 }
@@ -95,6 +95,7 @@ body {
 .buttonWrapper {
   width: 50%;
   margin: 0 auto;
+  // margin-top: 50px;
   display: flex;
   flex-direction: column;
 }
@@ -108,13 +109,13 @@ body {
 }
 
 .diveButton {
-  margin-top: 125px;
+  margin-top: 140px;
   border-radius: 15px;
   border: 5px solid rgba(255, 255, 255, 0.5);
 }
 
 .surfButton {
-  margin-top: 80px;
+  margin-top: 190px;
   border-radius: 15px;
   border: 5px solid rgba(21, 86, 98, 0.5);
   color: rgba(21, 86, 98, 0.5);
@@ -189,9 +190,10 @@ body {
 .tag {
   border-radius: 10px;
   background-color: $primary;
-  margin: 10px 7px 10px 0px;
-  padding: 5px 10px;
-  color: white;
+  margin: 10px 7px 0px 0px;
+  padding: 2px 7px;
+  color: $primary;
+  background-color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
 }
 
@@ -351,10 +353,17 @@ body {
   padding-left: 400px;
 }
 
+<<<<<<< HEAD
 
 .butt{
   color: #c7d6d7;
 }
+=======
+// h2 {
+//   padding: 10px;
+
+// }
+>>>>>>> 0e9a2f24e5586cd6b0c32ce3c0985c0a6728f271
 
 body {
   background-image: url("/hello.png");
@@ -371,8 +380,61 @@ hr {
 .Weather {
   color: rgba(255, 255, 255, 0.7);
 }
+<<<<<<< HEAD
 // .pro{
 //   border: solid #c7d6d7;
 //   background-color: #eefcfd83;
 //   width: 950px;
 // }
+=======
+
+.spots {
+  margin: 0 auto;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
+.spotsRow {
+  margin: 0 auto;
+}
+
+.tagContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.spotImage {
+  object-fit: cover;
+  width: 300px;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.tagHeadline {
+  margin-right: 10px;
+}
+
+h5 {
+  font-weight: 450;
+  margin: 10px 0 2px 0;
+  font-size: 20px;
+}
+
+.spotDetail {
+  overflow: scroll;
+}
+
+.spotSearch {
+  margin-top: 10px;
+}
+
+.scroll {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.description {
+  width: 300px;
+}
+>>>>>>> 0e9a2f24e5586cd6b0c32ce3c0985c0a6728f271

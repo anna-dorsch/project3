@@ -17,47 +17,53 @@ export default class SpotDetail extends Component {
     // let diveSpot = curSpot.diveSpot;
     // let surfSpot = curSpot.diveSpot;
     return (
-      <Col col-sm={2} className="col-text">
-        <div>
+      <Col
+        col-sm={2}
+        className="col-text panel panel-primary scroll"
+        // id="result_panel"
+      >
+        <div className="spotDetail">
           {curSpot.title === "" ? (
-            <h2>{curSpot.address}</h2>
+            <h4>{curSpot.address}</h4>
           ) : (
-            <h2>{curSpot.title}</h2>
+            <h4>{curSpot.title}</h4>
           )}
-
           {curSpot.pictureUrl === "" ? (
             <br />
           ) : (
-            <img src={curSpot.pictureUrl} style={{ width: 150 }} />
+            <img
+              class="spotImage"
+              src={curSpot.pictureUrl}
+              // style={{ width: 300, height:200}}
+            />
           )}
-
-          <h4>Type</h4>
+          <h5>Type</h5>
           <div>
             {curSpot.diveSpot === true ? <h6>Divespot</h6> : <h6>Surfspot</h6>}
             {curSpot.description === "" ? (
               <br />
             ) : (
               <div>
-                <h4>Description</h4>
-                <p>{curSpot.description}</p>
+                <h5>Description</h5>
+                <p className="description">{curSpot.description}</p>
               </div>
             )}
 
-            <h4>Rating</h4>
-            {curSpot.rating}
+            <h5>Rating: {curSpot.rating}</h5>
 
             {curSpot.address === "" ? (
               <p>{curSpot.location.coordinates}</p>
             ) : (
               <div>
-                <h4>Address</h4>
+                <h5>Address</h5>
                 <p>{curSpot.address}</p>
               </div>
             )}
 
             {curSpot.tag !== [] ? (
-              <div>
-                <h4>Tags</h4>
+              <div className="tagContainer">
+                <h5 className="tagHeadline">Tags</h5>
+                <br />
                 {curSpot.tag.map(e => (
                   <div className="tag" key={e}>
                     {e}
@@ -68,9 +74,7 @@ export default class SpotDetail extends Component {
               <br />
             )}
           </div>
-
-          <h4>Owner</h4>
-          {curSpot._owner.username}
+          {/* // <h4>Owner: {curSpot._owner.username}</h4> */}
         </div>
       </Col>
     );
