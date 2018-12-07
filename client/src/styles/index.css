@@ -6361,10 +6361,10 @@ body {
   font-size: 1.2em; }
 
 .Home {
-  background-image: url("/noSky2.png");
+  background-image: url("/noSky.png");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 700px;
+  height: 880px;
   background-position-y: 50%; }
 
 .buttonWrapper {
@@ -6381,12 +6381,12 @@ body {
   text-align: center; }
 
 .diveButton {
-  margin-top: 125px;
+  margin-top: 140px;
   border-radius: 15px;
   border: 5px solid rgba(255, 255, 255, 0.5); }
 
 .surfButton {
-  margin-top: 80px;
+  margin-top: 190px;
   border-radius: 15px;
   border: 5px solid rgba(21, 86, 98, 0.5);
   color: rgba(21, 86, 98, 0.5); }
