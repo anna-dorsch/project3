@@ -6583,7 +6583,7 @@ hr {
   flex-wrap: wrap; }
 
 .spotImage {
-  object-fit: contain;
+  object-fit: cover;
   width: 300px;
   height: 200px;
   margin-bottom: 10px; }
