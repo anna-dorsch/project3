@@ -421,7 +421,7 @@ class Spots extends Component {
                   <SpotDetail spots={this.state.spots} {...props} />
                 )}
               />
-              <Route render={() => <h2>Select a spot</h2>} />
+              {/* <Route render={() => <h2>Select a spot</h2>} /> */}
             </Switch>
           </Col>
         </Row>
