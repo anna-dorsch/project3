@@ -119,12 +119,12 @@ class Profile extends React.Component {
   render() {
     if(this.state.formVisible){
       return(
-        <Form className="formContainer">
+        <Form className="formContainer3">
         <FormGroup row>
           <Label for="exampleText" hidden>
           </Label>
           <Col sm="4" md={{ size: 3, offset: 3 }}>
-          <h2>Signup</h2>
+          <h2>Edit Profile</h2>
             <Input
               type="text"
               value={this.state.username}
@@ -166,61 +166,84 @@ class Profile extends React.Component {
       </FormGroup>
           <Button size="sm" outline color="info" onClick={e => this.handleEditSubmit(e)}>Save Changes</Button>
            </Col>
-        </FormGroup>
+           <FormGroup Row>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
         {this.state.message && (
           <div className="info info-danger">{this.state.message}</div>
         )}
+        </Col></FormGroup>
+        </FormGroup>
       </Form>
 
       )
     }
     else{
-
       return (
-        <div className="container">
-    <Col sm={5} className="col-text">
-      {this.state.URL !== "" && (
-        <img src={this.state.URL} style={{ height: 150 }} />
-        )}
-      {this.state.message && (
-        <div className="info">{this.state.message}</div>
-        )}
-    </Col>
-        <Col sm={5} className="col-text">
-          <Form>
-            <Row id="hi">
-              <h2>hi {this.state.username}</h2>
-            </Row>
-
-            <Row sm={7}>Username:{this.state.username} </Row>
-            <Row sm={7}>Email: {this.state.email} </Row>
-            <Row sm={7}> Your passion: {this.state.selectedOption} </Row>
-            <FormGroup check inline />
-            <Row sm={7}>
-              <Form onSubmit={e => this.handleSubmit(e)}>
-                <Input type="file" onChange={e => this.handleChange(e)} />
-                <Button size="sm" outline color="info" type="submit">
-                  Upload
-                </Button>
-              </Form>
-            </Row>
-            <Row sm={7}>
-              <Button
-                size="sm"
-                outline
-                color="info"
-                onClick={e => this.handleEdit(e)}
-                >
-                Edit
-              </Button>
-              {api.isLoggedIn() && <Button size="sm"
-                outline
-                color="info"
-                onClick={() => this.handleDelete(this.state.id)}>Delete</Button>}
-             
-            </Row>
-          </Form>
+        <div className="formContainer2">
+        <FormGroup Row>
+        <Col sm="4" md={{ size: 3, offset: 4 }}>
+              <h2>hi {this.state.username}.</h2>
+          </Col>
+        </FormGroup>
+          <FormGroup Row>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+              {this.state.URL !== "" && (
+                <img src={this.state.URL} alt="Add a picture" style={{ height: 150 }} />
+                )}
+              </Col>
+              </FormGroup>
+        <FormGroup Row>
+        <Col sm="4" md={{ size: 3, offset: 3 }}>
+          Username:{this.state.username}</Col>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+          Email: {this.state.email}</Col>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+          Your passion: {this.state.selectedOption}
+          </Col>
+        </FormGroup>
+        <FormGroup Row>
+        <Col sm="4" md={{ size: 3, offset: 3 }}>
+        Add a picture:
         </Col>
+        </FormGroup>
+        <FormGroup Row>
+        <Col sm="4" md={{ size: 3, offset: 3 }}>
+            <Form onSubmit={e => this.handleSubmit(e)}>
+            <Input type="file" onChange={e => this.handleChange(e)}/>
+            </Form>
+          </Col>
+        </FormGroup>
+        <FormGroup Row>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+              <Button size="sm" outline color="info" type="submit">
+                Upload
+              </Button>
+              </Col>              
+          </FormGroup>
+          <FormGroup Row>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+            <Button
+              size="sm"
+              outline
+              color="info"
+              onClick={e => this.handleEdit(e)}>
+              Edit
+            </Button>
+            {api.isLoggedIn() && 
+            <Button size="sm"
+              outline
+              color="info"
+              onClick={() => this.handleDelete(this.state.id)}>Delete
+            </Button>}
+            </Col>
+          </FormGroup>
+          <FormGroup Row>
+          <Col sm="4" md={{ size: 3, offset: 3 }}>
+            {this.state.message && (
+            <div className="info">{this.state.message}</div>
+            )}
+            </Col>
+          </FormGroup>
       </div>
     );
   }

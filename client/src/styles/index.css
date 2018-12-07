@@ -6318,11 +6318,10 @@ body {
   font-family: sans-serif; }
 
 .info {
-  margin: 20px;
   padding: 10px 20px;
   border-radius: 10px;
   display: inline-block;
-  background-color: #5776e9;
+  background-color: #177e89;
   color: white; }
 
 .info.info-danger {
@@ -6554,6 +6553,17 @@ body {
 .formContainer {
   padding-top: 250px;
   padding-left: 150px; }
+
+.formContainer2 {
+  padding-top: 150px;
+  padding-left: 400px; }
+
+.formContainer3 {
+  padding-top: 175px;
+  padding-left: 400px; }
+
+.butt {
+  color: #c7d6d7; }
 
 body {
   background-image: url("/hello.png");
